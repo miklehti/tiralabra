@@ -26,11 +26,10 @@ public class RegExTulkki {
     }
 
     public static String kasitteleStringi(String vastaus) {
-        for (int i = 0; i<vastaus.length();i++){
-            String kasiteltavaKirjain = vastaus.substring(i, i+1);
-      
-        lopputulos.add(kasiteltavaKirjain);
-    }
-        return "a";
+        StringTaulukko stringTaulukko = new StringTaulukko();
+        Parseri parseri = new Parseri(stringTaulukko);
+        stringTaulukko.lisaaStringTaulukkoon(vastaus);
+        String tulos = parseri.getStringTaulukko().toString();
+                return tulos;
     }
 }
