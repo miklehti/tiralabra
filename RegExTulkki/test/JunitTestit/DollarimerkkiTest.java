@@ -1,9 +1,8 @@
-package JunitTestit;
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+package JunitTestit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author lehtimik
  */
-public class BacklashTest {
+public class DollarimerkkiTest {
     
-    public BacklashTest() {
+    public DollarimerkkiTest() {
     }
     
     @BeforeClass
@@ -39,6 +38,6 @@ public class BacklashTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-     @Test
-     public void hello() {}
+    // @Test
+    // public void hello() {}
 }

@@ -1,9 +1,8 @@
-package JunitTestit;
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+package JunitTestit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,14 +10,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import regextulkki.KasitteleStringi;
+import regextulkki.StringTaulukko;
 
 /**
  *
  * @author lehtimik
  */
-public class BacklashTest {
+public class KasitteleStringiTest {
     
-    public BacklashTest() {
+    StringTaulukko stringTaulukko;
+    
+    public KasitteleStringiTest() {
     }
     
     @BeforeClass
@@ -31,14 +34,17 @@ public class BacklashTest {
     
     @Before
     public void setUp() {
+         stringTaulukko = new StringTaulukko();
     }
     
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-     @Test
-     public void hello() {}
+    
+    @Test
+    public void kasitteleStringiTestEttaToimii() {
+        String testi = "testi";
+        KasitteleStringi.kasitteleStringi(testi);
+        assertEquals(testi, "testi");
+    }
 }
