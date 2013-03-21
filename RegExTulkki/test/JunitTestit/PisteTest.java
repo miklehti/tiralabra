@@ -12,7 +12,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author lehtimik
  */
 public class PisteTest {

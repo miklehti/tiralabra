@@ -19,9 +19,10 @@ public class RegExTulkki {
     public static void main(String[] args) {
         
         
-        String vastaus = PopKysyIlmoita.kysyString("Anna säännöllinen lause");
-        String lopputulos = KasitteleStringi.kasitteleStringi(vastaus);
-        PopKysyIlmoita.ilmoita(lopputulos);
+        String vastaus = PopKysyIlmoita.kysyString("Anna säännöllinen lause");       
+        String[] lopputulokset = KasitteleStringi.kasitteleStringi(vastaus);
+        PopKysyIlmoita.ilmoita(lopputulokset[0]);
+        PopKysyIlmoita.ilmoita(lopputulokset[1]);
     }
 
 

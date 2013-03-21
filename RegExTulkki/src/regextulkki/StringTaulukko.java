@@ -1,26 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package regextulkki;
 
-/**
- *
- * @author lehtimik
- */
+
 public class StringTaulukko {
 
-     /**
- * taulukko jota sitten tarvittaessa kasvatetaan
- */
+    /**
+     * taulukko jota sitten tarvittaessa kasvatetaan
+     */
     private String[] taulukko = new String[10];
-         /**
- * kuinka monta alkiota taulukossa on
- */
+    /**
+     * kuinka monta alkiota taulukossa on
+     */
     private int alkioidenLKM;
-             /**
- * missä kohtaa taulukkoa mennään tällä hetkellä kun tutkitaan
- */
+    /**
+     * missä kohtaa taulukkoa mennään tällä hetkellä kun tutkitaan
+     */
     private int tutkittavaIndeksi;
 
     /**
@@ -75,31 +69,43 @@ public class StringTaulukko {
     }
 
     /**
-     * Metodi tuplaa luokan taulukon koon ja kopio vanhan taulukon tiedot sinne
+     * Metodi pilkkoo jokaisen kirjaimen omaan alkioon taulukossa, jos taulukko loppuu tuplataan taululkon koko ja kopioidaan vanhat sinne
+     * @param lisattava lisattava stringi joka pilkotaan
      */
-    public void lisaaStringTaulukkoon(String lisattava) {
+    public void pilkoStringTaulukkoon(String lisattava) {
 
         for (int i = 0; i < lisattava.length(); i++) {
-            if (alkioidenLKM == taulukko.length) {
-                tuplaaTaulukonKoko();
-            }
+            tutkiTarviikoTuplataTaulukko();
             taulukko[alkioidenLKM] = lisattava.substring(i, i + 1);
             alkioidenLKM = alkioidenLKM + 1;
         }
 
     }
     
+       /**
+     * Metodi lisää stringin sellaisenaan taulukon alkioon, jos taulukko loppuu tuplataan taululkon koko ja kopioidaan vanhat sinne
+     * @param lisattava lisattava stringi joka pilkotaan
+     */
 
-/**
- * Metodi poistaa merkkejä taulukosta siirtämällä loppuja merkkejä alkuun päin.
- *
- * @param   aloitusIndeksi   Käyttäjän antama aloitusindeksi
- * @param montakoPoistetaan Kuinka monta merkkiä poistetaan
- * @return onnistuiko poisto
- */
+    public void lisaaStringKokonaisenaTaulukkoon(String lisattava) {
+        tutkiTarviikoTuplataTaulukko();
+        taulukko[alkioidenLKM] = lisattava;
+        alkioidenLKM = alkioidenLKM + 1;
+    }
 
+    /**
+     * Metodi poistaa merkkejä taulukosta siirtämällä loppuja merkkejä alkuun
+     * päin.
+     *
+     * @param aloitusIndeksi Käyttäjän antama aloitusindeksi
+     * @param montakoPoistetaan Kuinka monta merkkiä poistetaan
+     * @return onnistuiko poisto
+     */
     public boolean poistaMerkkejaTaulukosta(int aloitusIndeksi, int montakoPoistetaan) {
         if (montakoPoistetaan > alkioidenLKM) {
+            return false;
+        }
+        if (aloitusIndeksi < 0 | aloitusIndeksi > alkioidenLKM) {
             return false;
         }
         String[] aputaulukko = kopioiTaulukonAlkuUuteenTaulukkoon(aloitusIndeksi);
@@ -110,20 +116,20 @@ public class StringTaulukko {
     }
 
     /**
- * Metodi palauttaa taulukon alkion arvon tietystä indeksistä
- *
- * @param   aloitusIndeksi   Käyttäjän antama aloitusindeksi
- * @return StringTaulukon alkio
- */
+     * Metodi palauttaa taulukon alkion arvon tietystä indeksistä
+     *
+     * @param aloitusIndeksi Käyttäjän antama aloitusindeksi
+     * @return StringTaulukon alkio
+     */
     public String annaTaulukonAlkionArvo(int taulukonIndeksi) {
         return taulukko[taulukonIndeksi];
     }
-    
-        /**
- * toString() metodi tulostukseen
- * @return tulostettava stringi
- */
 
+    /**
+     * toString() metodi tulostukseen
+     *
+     * @return tulostettava stringi
+     */
     public String toString() {
         String tulostettava = "";
         for (int i = 0; i < alkioidenLKM; i++) {
@@ -132,45 +138,48 @@ public class StringTaulukko {
         return tulostettava;
     }
 
-            /**
- * Metodi palauttaa string taulukon
- * @return String taulukko
- */
+    /**
+     * Metodi palauttaa string taulukon
+     *
+     * @return String taulukko
+     */
     public String[] getTaulukko() {
         return taulukko;
     }
 
-                /**
- * Metodi palauttaa taulukon alkioiden lukumäärän
- * @return alkioiden lukumäärä
- */
+    /**
+     * Metodi palauttaa taulukon alkioiden lukumäärän
+     *
+     * @return alkioiden lukumäärä
+     */
     public int getAlkioidenLKM() {
         return alkioidenLKM;
     }
 
-                    /**
- * Metodi asettaa alkioiden lukumäärän tietyksi
- * @param alkioiden lukumäärä
- */
+    /**
+     * Metodi asettaa alkioiden lukumäärän tietyksi
+     *
+     * @param alkioiden lukumäärä
+     */
     public void setAlkioidenLKM(int alkioidenLKM) {
         this.alkioidenLKM = alkioidenLKM;
     }
-    
- /**
- * Metodi asettaa taulukon tietyksi
- * @param taulukko uusi taulukko
- */
 
+    /**
+     * Metodi asettaa taulukon tietyksi
+     *
+     * @param taulukko uusi taulukko
+     */
     public void setTaulukko(String[] taulukko) {
         this.taulukko = taulukko;
     }
-    
-  /**
- * Metodi kopioi tiettyyn indeksiin asti taulukon uuteen taulukkoon
- * @param lopetusIndeksi mihin kohtaan asti kopioidaan
- * @return aputaulukko jossa luokan taulukon alkuosa
- */
 
+    /**
+     * Metodi kopioi tiettyyn indeksiin asti taulukon uuteen taulukkoon
+     *
+     * @param lopetusIndeksi mihin kohtaan asti kopioidaan
+     * @return aputaulukko jossa luokan taulukon alkuosa
+     */
     public String[] kopioiTaulukonAlkuUuteenTaulukkoon(int lopetusIndeksi) {
         String[] aputaulukko = new String[taulukko.length];
         for (int i = 0; i < lopetusIndeksi; i++) {
@@ -178,15 +187,22 @@ public class StringTaulukko {
         }
         return aputaulukko;
     }
-  /**
- * Metodi kopioi tiettystä indeksistä lähtien loput taulukosta
- * @param aloitusIndeksi mihin kohdasta lähtien kopioidaan
- * 
- */
-    
+
+    /**
+     * Metodi kopioi tiettystä indeksistä lähtien loput taulukosta
+     *
+     * @param aloitusIndeksi mihin kohdasta lähtien kopioidaan
+     *
+     */
     public void kopioiPoistettavanJalkeisetAlkiotUuteenTaulukkoon(int aloitusIndeksi, int montakoPoistetaan, String[] aputaulukko) {
         for (int j = aloitusIndeksi + montakoPoistetaan; j < alkioidenLKM; j++) {
             aputaulukko[j - montakoPoistetaan] = taulukko[j];
+        }
+    }
+
+    public void tutkiTarviikoTuplataTaulukko() {
+        if (alkioidenLKM == taulukko.length) {
+            tuplaaTaulukonKoko();
         }
     }
 }

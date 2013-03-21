@@ -65,7 +65,7 @@ public class StringTaulukkoTest {
     @Test
     public void lisaaStringTaulukkoon9kirjainta() {
         String sana = "yhdeksank";
-        stringTaulukko.lisaaStringTaulukkoon(sana);
+        stringTaulukko.pilkoStringTaulukkoon(sana);
         for (int i = 0; i < sana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
             assertEquals(sana.substring(i, i + 1), sanaTaulukossa);
@@ -76,7 +76,7 @@ public class StringTaulukkoTest {
     @Test
     public void lisaaStringTaulukkoon10kirjainta() {
         String sana = "kymmenenki";
-        stringTaulukko.lisaaStringTaulukkoon(sana);
+        stringTaulukko.pilkoStringTaulukkoon(sana);
         for (int i = 0; i < sana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
             assertEquals(sana.substring(i, i + 1), sanaTaulukossa);
@@ -87,7 +87,7 @@ public class StringTaulukkoTest {
     @Test
     public void lisaaStringTaulukkoon11kirjainta() {
         String sana = "yksitoistak";
-        stringTaulukko.lisaaStringTaulukkoon(sana);
+        stringTaulukko.pilkoStringTaulukkoon(sana);
         for (int i = 0; i < sana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
             assertEquals(sana.substring(i, i + 1), sanaTaulukossa);
@@ -98,7 +98,7 @@ public class StringTaulukkoTest {
     @Test
     public void lisaaStringTaulukkoon19kirjainta() {
         String sana = "yhdeksantoistakirja";
-        stringTaulukko.lisaaStringTaulukkoon(sana);
+        stringTaulukko.pilkoStringTaulukkoon(sana);
         for (int i = 0; i < sana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
             assertEquals(sana.substring(i, i + 1), sanaTaulukossa);
@@ -109,7 +109,7 @@ public class StringTaulukkoTest {
     @Test
     public void lisaaStringTaulukkoon20kirjainta() {
         String sana = "kaksikymmentakirjain";
-        stringTaulukko.lisaaStringTaulukkoon(sana);
+        stringTaulukko.pilkoStringTaulukkoon(sana);
         for (int i = 0; i < sana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
             assertEquals(sana.substring(i, i + 1), sanaTaulukossa);
@@ -120,7 +120,7 @@ public class StringTaulukkoTest {
     @Test
     public void lisaaStringTaulukkoon21kirjainta() {
         String sana = "kaksikymmentakirjaint";
-        stringTaulukko.lisaaStringTaulukkoon(sana);
+        stringTaulukko.pilkoStringTaulukkoon(sana);
         for (int i = 0; i < sana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
             assertEquals(sana.substring(i, i + 1), sanaTaulukossa);
@@ -131,7 +131,7 @@ public class StringTaulukkoTest {
     @Test
     public void lisaaStringTaulukkoon21kirjaintaTutkiTaulukonKoko() {
         String sana = "kaksikymmentakirjaint";
-        stringTaulukko.lisaaStringTaulukkoon(sana);
+        stringTaulukko.pilkoStringTaulukkoon(sana);
 
         assertEquals(40, stringTaulukko.getTaulukko().length);
 
@@ -141,8 +141,8 @@ public class StringTaulukkoTest {
     public void lisaaKaksiStringia() {
         String ekaSana = "eka";
         String tokaSana = "toka";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
-        stringTaulukko.lisaaStringTaulukkoon(tokaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(tokaSana);
 
         for (int i = 0; i < ekaSana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
@@ -159,8 +159,8 @@ public class StringTaulukkoTest {
     public void lisaaKaksiStringiaPlusTuplaus() {
         String ekaSana = "eka";
         String tokaSana = "tokasana";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
-        stringTaulukko.lisaaStringTaulukkoon(tokaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(tokaSana);
 
         for (int i = 0; i < ekaSana.length(); i++) {
             String sanaTaulukossa = stringTaulukko.annaTaulukonAlkionArvo(i);
@@ -177,8 +177,8 @@ public class StringTaulukkoTest {
     public void lisaaKaksiStringiaTaulukonKoko() {
         String ekaSana = "eka";
         String tokaSana = "tokasana";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
-        stringTaulukko.lisaaStringTaulukkoon(tokaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(tokaSana);
 
         assertEquals(20, stringTaulukko.getTaulukko().length);
 
@@ -187,7 +187,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaEkaMerkki() {
         String ekaSana = "eka";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 1);
         String tulos = "ka";
         assertEquals("ka", stringTaulukko.toString());
@@ -201,7 +201,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaVikaMerkki() {
         String ekaSana = "eka";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(2, 1);
         String tulos = "ek";
 
@@ -215,7 +215,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaTokaMerkki() {
         String ekaSana = "eka";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(1, 1);
         String tulos = "ea";
 
@@ -229,7 +229,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiMerkit() {
         String ekaSana = "eka";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 3);
 
         assertEquals("", stringTaulukko.toString());
@@ -240,7 +240,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiPaitsiEkaMerkki() {
         String ekaSana = "eka";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(1, 2);
 
         assertEquals("e", stringTaulukko.toString());
@@ -251,7 +251,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiPaitsiVikaMerkki() {
         String ekaSana = "eka";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 2);
 
         assertEquals("a", stringTaulukko.toString());
@@ -263,7 +263,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaEkaMerkki10kirjainta() {
         String ekaSana = "kymmenenki";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 1);
         String tulos = "ymmenenki";
         assertEquals("ymmenenki", stringTaulukko.toString());
@@ -277,7 +277,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaVikaMerkki10kirjainta() {
         String ekaSana = "kymmenenki";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(9, 1);
         String tulos = "kymmenenk";
 
@@ -291,7 +291,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiMerkit10kirjainta() {
         String ekaSana = "kymmenenki";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 10);
 
         assertEquals("", stringTaulukko.toString());
@@ -302,7 +302,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiPaitsiEkaMerkki10kirjainta() {
         String ekaSana = "kymmenenki";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(1, 9);
 
         assertEquals("k", stringTaulukko.toString());
@@ -313,7 +313,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiPaitsiVikaMerkki10kirjainta() {
         String ekaSana = "kymmenenki";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 9);
 
         assertEquals("i", stringTaulukko.toString());
@@ -325,7 +325,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaEkaMerkki11kirjainta() {
         String ekaSana = "yksitoistak";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 1);
         String tulos = "ksitoistak";
         assertEquals("ksitoistak", stringTaulukko.toString());
@@ -339,7 +339,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaVikaMerkki11kirjainta() {
         String ekaSana = "yksitoistak";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(10, 1);
         String tulos = "yksitoista";
         assertEquals("yksitoista", stringTaulukko.toString());
@@ -352,7 +352,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiMerkit11kirjainta() {
         String ekaSana = "yksitoistak";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 11);
 
         assertEquals("", stringTaulukko.toString());
@@ -364,7 +364,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiPaitsiEkaMerkki11kirjainta() {
         String ekaSana = "yksitoistak";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(1, 10);
 
         assertEquals("y", stringTaulukko.toString());
@@ -375,7 +375,7 @@ public class StringTaulukkoTest {
     @Test
     public void poistaKaikkiPaitsiVikaMerkki11kirjainta() {
         String ekaSana = "yksitoistak";
-        stringTaulukko.lisaaStringTaulukkoon(ekaSana);
+        stringTaulukko.pilkoStringTaulukkoon(ekaSana);
         stringTaulukko.poistaMerkkejaTaulukosta(0, 10);
 
         assertEquals("k", stringTaulukko.toString());
@@ -405,24 +405,74 @@ public class StringTaulukkoTest {
 
     @Test
     public void setTaulukko() {
-         String[] taulukko = new String[10];
+        String[] taulukko = new String[10];
         stringTaulukko.setTaulukko(taulukko);
-        
- assertEquals(10, stringTaulukko.getTaulukko().length);
+
+        assertEquals(10, stringTaulukko.getTaulukko().length);
 
     }
-        @Test
+
+    @Test
     public void poiistaLiikaa() {
-            stringTaulukko.lisaaStringTaulukkoon("a");
-            stringTaulukko.lisaaStringTaulukkoon("b");
-            stringTaulukko.lisaaStringTaulukkoon("c");
-            stringTaulukko.lisaaStringTaulukkoon("d");
-            
+        stringTaulukko.pilkoStringTaulukkoon("a");
+        stringTaulukko.pilkoStringTaulukkoon("b");
+        stringTaulukko.pilkoStringTaulukkoon("c");
+        stringTaulukko.pilkoStringTaulukkoon("d");
+
         boolean onnaako = stringTaulukko.poistaMerkkejaTaulukosta(0, 5);
-      
-        
- assertEquals(onnaako,false);
+
+
+        assertEquals(onnaako, false);
 
     }
-    
+
+    @Test
+    public void poiistaVaarin() {
+        stringTaulukko.pilkoStringTaulukkoon("a");
+        stringTaulukko.pilkoStringTaulukkoon("b");
+        stringTaulukko.pilkoStringTaulukkoon("c");
+        stringTaulukko.pilkoStringTaulukkoon("d");
+
+        boolean onnaako = stringTaulukko.poistaMerkkejaTaulukosta(-1, 1);
+        boolean onnaako2 = stringTaulukko.poistaMerkkejaTaulukosta(5, 1);
+
+
+        assertEquals(onnaako, false);
+        assertEquals(onnaako2, false);
+
+    }
+
+    @Test
+    public void lisaaStringKokonaisenaTaulukkoonTest() {
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("a");
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("ab");
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abc");
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcdd");
+
+        int alkioidenLKM = stringTaulukko.getAlkioidenLKM();
+        int taulunPituus1 = stringTaulukko.getTaulukko().length;
+
+        assertEquals(alkioidenLKM, 4);
+        assertEquals(taulunPituus1, 10);
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcde");
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcdef");
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcdefg");
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcdefgh");
+        int taulunPituus2 = stringTaulukko.getTaulukko().length;
+        int alkioidenLKM2 = stringTaulukko.getAlkioidenLKM();
+        assertEquals(alkioidenLKM2, 8);
+        assertEquals(taulunPituus2, 10);
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcdefgh");
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcdefgh");
+        int taulunPituus3 = stringTaulukko.getTaulukko().length;
+        int alkioidenLKM3 = stringTaulukko.getAlkioidenLKM();
+        assertEquals(alkioidenLKM3, 10);
+        assertEquals(taulunPituus3, 10);
+        stringTaulukko.lisaaStringKokonaisenaTaulukkoon("abcdefgh");
+        int taulunPituus4 = stringTaulukko.getTaulukko().length;
+        int alkioidenLKM4 = stringTaulukko.getAlkioidenLKM();
+        assertEquals(alkioidenLKM4, 11);
+        assertEquals(taulunPituus4, 20);
+
+    }
 }

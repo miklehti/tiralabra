@@ -45,7 +45,7 @@ public class ParseriTest {
 
     @Test
     public void kayLapiStringTaulukkoTest() {
-        stringTaulukko.lisaaStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
+        stringTaulukko.pilkoStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
          parseri = new Parseri(stringTaulukko);
          parseri.kayLapiStringTaulukko();
         assertEquals(20, stringTaulukko.getTaulukko().length);
@@ -53,7 +53,7 @@ public class ParseriTest {
     
         @Test
     public void getStringTaulukkoTest() {
-        stringTaulukko.lisaaStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
+        stringTaulukko.pilkoStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
          parseri = new Parseri(stringTaulukko);
          StringTaulukko tulos = parseri.getStringTaulukko();
           assertEquals(20, tulos.getTaulukko().length);
