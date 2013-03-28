@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author lehtimik
  */
-public class PopKysyIlmoitaTest {
+public class PlusTest {
     
-    public PopKysyIlmoitaTest() {
+    public PlusTest() {
     }
     
     @BeforeClass

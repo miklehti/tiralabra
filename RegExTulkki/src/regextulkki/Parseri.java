@@ -4,14 +4,6 @@
  */
 package regextulkki;
 
-import erikoismerkit.TahtiMerkki;
-import erikoismerkit.Piste;
-import erikoismerkit.Dollarimerkki;
-import erikoismerkit.Caret;
-import erikoismerkit.Kysymysmerkki;
-import erikoismerkit.Backlash;
-import erikoismerkit.TaiMerkki;
-
 /**
  *
  * @author lehtimik
@@ -33,7 +25,7 @@ public class Parseri {
     /**
      * erikoismerkit regexissä
      */
-    private String erikoismerkit = "[()$.|^*?\\";
+    private String erikoismerkit = "[()+$.|^*?\\";
 
     /**
      * Konstruktori. Tarvitsee stringTaulukon.
@@ -52,10 +44,27 @@ public class Parseri {
      */
     private boolean lisataankoPiste = true;
     private boolean lisataankoKysymysmerkki = true;
+    private boolean lisataankoKysymysmerkkiKysymysmerkki = true;
     private boolean lisataankoDollari = true;
     private boolean lisataankoTahti = true;
+    private boolean lisataankoTahtiKysymysmerkki = true;
     private boolean lisataankoTaiMerkki = true;
     private boolean lisataankoCaret = true;
+    private boolean lisataankoBacklash = true;
+    private boolean lisataankoPlusmerkki = true;
+    private boolean lisataankoPlusmerkkiKysymysmerkki = true;
+    
+      /**
+     * tulkinnat stringmuodossa, nämä lisätään aina tulkinnatTaulukkoon nimiseen StringTaulukkoon kun niihin viitataan tutkittavassa Stringissä
+     */
+    private String tahtiTulkinta = "(toistetaan edellistä merkkiä 0-n kertaa)";
+    private String taiTulkinta = "(tai)";
+    private String plusTulkinta = "(toistetaan edellistä merkkiä 1-n kertaa)";
+    private String dollariTulkinta = "(etsitään edellistä (<=) stringin lopusta)";
+    private String pisteTulkinta = "(mikä tahansa merkki)";
+    private String kysymysmerkkiTulkinta = "(edelllä oleva termi(t) ovat vapaaehtoisia, ahne versio)";
+    private String caretTulkinta = "((etsitään seuraavaa (=>) stringin alusta))";
+  
 
     /**
      * Metodi tulkitsee erkoismerkit ja kutsuu sitä vastaavaa luokkametodia
@@ -66,27 +75,37 @@ public class Parseri {
      */
     public void tulkitseErikoismerkki(String tutkittava, int indeksi) {
         if (tutkittava.equals("\\")) {
-            Backlash.tutkiBacklash(stringTaulukko);
+            tutkiBacklash();
+            lisataankoBacklashKaytetytRegularExpressionMerkkeihin();
         }
         if (tutkittava.equals("$")) {
-            Dollarimerkki.tutkiDollarimerkki(stringTaulukko);
+            tutkiDollari();
+            lisataankoDollariKaytetytRegularExpressionMerkkeihin();
         }
         if (tutkittava.equals(".")) {
-            Piste.tutkiPiste(stringTaulukko, tulkinnatTaulukkoon);
+            tutkiPiste();
             lisataankoPisteKaytetytRegularExpressionMerkkeihin();
 
         }
         if (tutkittava.equals("|")) {
-            TaiMerkki.tutkiTaiMerkki(stringTaulukko);
+            tutkiTaiMerkki();
+            lisataankoTaiMerkkiKaytetytRegularExpressionMerkkeihin();
         }
         if (tutkittava.equals("^")) {
-            Caret.tutkiCaretmerkki(stringTaulukko);
+            tutkiCaretMerkki();
+            lisataankoCaretmerkkiKaytetytRegularExpressionMerkkeihin();
         }
         if (tutkittava.equals("?")) {
-            Kysymysmerkki.tutkiKysymysmerkki(stringTaulukko);
+            boolean kaksiKysymysmerkkia = tutkiKysymysmerkki();
+            lisataankoKysymysmerkkiKaytetytRegularExpressionMerkkeihin(kaksiKysymysmerkkia);
         }
         if (tutkittava.equals("*")) {
-            TahtiMerkki.tutkiTahtismerkki(stringTaulukko);
+            boolean tahtiKysymysmerkki = tutkiTahtiMerkki();
+            lisataankoTahtiMerkkiKaytetytRegularExpressionMerkkeihin(tahtiKysymysmerkki);
+        }
+        if (tutkittava.equals("+")) {
+            boolean PlusKysymysmerkki = tutkiPlusMerkki();
+            lisataankoPlusMerkkiKaytetytRegularExpressionMerkkeihin(PlusKysymysmerkki);
         }
 
 
@@ -163,14 +182,167 @@ public class Parseri {
     }
 
     /**
-     * Metodi tutkii onko piste jo lisätty käytettyihin  regexeihin. Jos ei ole niin lisätään ja merkitään lisätyksi.
+     * Metodi tutkii onko piste jo lisätty käytettyihin regexeihin. Jos ei ole
+     * niin lisätään ja merkitään lisätyksi.
      *
      * @return palauttaa StringTaulukon regex tulkinnoista
      */
     public void lisataankoPisteKaytetytRegularExpressionMerkkeihin() {
         if (lisataankoPiste == true) {
-            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\".\" piste tarkoittaa että mikä tahansa merkki");
+            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\".\" piste tarkoittaa että mikä tahansa merkki\n");
             lisataankoPiste = false;
         }
+    }
+
+    public void lisataankoDollariKaytetytRegularExpressionMerkkeihin() {
+        if (lisataankoDollari == true) {
+            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"$\" dollari tarkoittaa että tutkitaan jonkun stringin loppua löytyykö sieltä ennen dollari-merkkiä annettua termiä, tai termejä jos sulut ennen dollaria\n");
+            lisataankoDollari = false;
+        }
+    }
+
+    public void lisataankoBacklashKaytetytRegularExpressionMerkkeihin() {
+        if (lisataankoBacklash == true) {
+            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"\\\" kenoviiva tarkoittaa että seuraava merkki ei olekaan erikoismerkki\n");
+            lisataankoBacklash = false;
+        }
+    }
+
+    public void lisataankoTaiMerkkiKaytetytRegularExpressionMerkkeihin() {
+        if (lisataankoTaiMerkki == true) {
+            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"|\" tai-merkki\n");
+            lisataankoTaiMerkki = false;
+        }
+    }
+
+    public void lisataankoKysymysmerkkiKaytetytRegularExpressionMerkkeihin(boolean kaksiKysymysmerkkia) {
+        if (kaksiKysymysmerkkia == false) {
+            if (lisataankoKysymysmerkki == true) {
+                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"?\" Kysymysmerkki tarkoittaa että edellinen arvo on valinnainen. \n Yksi kysymysmerkki tarkoittaa että kyseessä on ahne versio. \nAhne versio takoittaa että regeular expression yrittää ensin saada valinnaisen termin onnistumaan ja vasta sitten yrittää että ei onnistu\n");
+                lisataankoKysymysmerkki = false;
+            }
+        }
+        if (kaksiKysymysmerkkia == true) {
+            if (lisataankoKysymysmerkkiKysymysmerkki == true) {
+                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"??\" Tupla-kysymysmerkki tarkoittaa että edellinen arvo on valinnainen. \n Kaksi kysymysmerkkiä tarkoittaa että kyseessä on laiska versio. \nLaiska versio takoittaa että regeular expression yrittää ensin ilman valinnaista termiä ja vasta sitten valinnaisen termin kanssa\n");
+                lisataankoKysymysmerkkiKysymysmerkki = false;
+            }
+        }
+
+    }
+
+    public void lisataankoTahtiMerkkiKaytetytRegularExpressionMerkkeihin(boolean tahtiKysymysmerkki) {
+        if (tahtiKysymysmerkki == false) {
+            if (lisataankoTahti == true) {
+                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"*\" Tähti-merkki tarkoittaa että edellinen arvo toistetaan nolla-ääretön kertaa \n Pelkkä tähtimerkki ilman kysymysmerkkiä tarkoittaa että kyseessä on ahne versio. \nAhne versio takoittaa että regeular expression yrittää ensin mahdollisimman monella vaihtoehdolla ja karsii sitten vaihtoehtoja pienemmäksi kunnes ei mahdollisesti löydä etsimäänsä\n");
+                lisataankoTahti = false;
+            }
+        }
+        if (tahtiKysymysmerkki == true) {
+            if (lisataankoTahtiKysymysmerkki == true) {
+                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"*?\" Tähti-kysymysmerkki tarkoittaa että edellinen arvo toistetaan nolla-ääretön kertaa. \n Kaksi kysymysmerkkiä tarkoittaa että kyseessä on laiska versio. \nLaiska versio takoittaa että regeular expression yrittää ensin minimisetillä ja sitten kasvattaa hakukriteeriä kunnes löytyy\n");
+                lisataankoTahtiKysymysmerkki = false;
+            }
+        }
+
+    }
+
+    public void lisataankoPlusMerkkiKaytetytRegularExpressionMerkkeihin(boolean PlusKysymysmerkki) {
+        if (PlusKysymysmerkki == false) {
+            if (lisataankoPlusmerkki == true) {
+                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"+\" Plus-merkki tarkoittaa että edellinen arvo toistetaan yksi-ääretön kertaa \n Pelkkä tähtimerkki ilman kysymysmerkkiä tarkoittaa että kyseessä on ahne versio. \nAhne versio takoittaa että regeular expression yrittää ensin mahdollisimman monella vaihtoehdolla ja karsii sitten vaihtoehtoja pienemmäksi kunnes ei mahdollisesti löydä etsimäänsä\n");
+                lisataankoPlusmerkki = false;
+            }
+        }
+        if (PlusKysymysmerkki == true) {
+            if (lisataankoPlusmerkkiKysymysmerkki == true) {
+                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"*?\" Tähti-kysymysmerkki tarkoittaa että edellinen arvo toistetaan yksi-ääretön kertaa. \n Kaksi kysymysmerkkiä tarkoittaa että kyseessä on laiska versio. \nLaiska versio takoittaa että regeular expression yrittää ensin minimisetillä ja sitten kasvattaa hakukriteeriä kunnes löytyy\n");
+                lisataankoPlusmerkkiKysymysmerkki = false;
+            }
+        }
+
+    }
+
+    public void lisataankoCaretmerkkiKaytetytRegularExpressionMerkkeihin() {
+        if (lisataankoCaret == true) {
+            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon("\"^\" hattu-merkki tarkoittaa että etsintää tehdään sanan alusta tätä merkkiä seuraavalla termillä, tai termeillä jos suluissa\n");
+            lisataankoCaret = false;
+        }
+    }
+
+    public void tutkiPiste() {
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
+    }
+
+    public void tutkiDollari() {
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
+    }
+
+    public void tutkiBacklash() {
+        String seuraavaMerkki = stringTaulukko.annaTaulukonAlkionArvo((stringTaulukko.getTutkittavaIndeksi() + 1));
+        if(!seuraavaMerkki.equals("false")){
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(seuraavaMerkki);
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        }
+       
+
+    }
+
+    public boolean tutkiTahtiMerkki() {
+        if (onkoKysymysmerkkiPerassa()) {
+            return true;
+        }
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
+        return false;
+    }
+
+    public boolean tutkiPlusMerkki() {
+        if (onkoKysymysmerkkiPerassa()) {
+            return true;
+        }
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
+        return false;
+    }
+
+    public void tutkiTaiMerkki() {
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
+    }
+
+    public boolean tutkiKysymysmerkki() {
+        if (onkoKysymysmerkkiPerassa()) {
+            stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 2);
+            tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
+            return true;
+        }
+
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
+        return false;
+    }
+
+    public boolean onkoKysymysmerkkiPerassa() {
+        int seuraavanTutkittavanIndeksi = stringTaulukko.getTutkittavaIndeksi() + 1;
+        if (onkoMerkkejaVielaJaljella(seuraavanTutkittavanIndeksi)) {
+            String seuraavaTutkittava = stringTaulukko.annaTaulukonAlkionArvo(seuraavanTutkittavanIndeksi);
+            if (seuraavaTutkittava.equals("?")) {
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean onkoMerkkejaVielaJaljella(int seuraavanTutkittavanIndeksi) {
+        return seuraavanTutkittavanIndeksi <= stringTaulukko.getTaulukko().length;
+    }
+
+    public void tutkiCaretMerkki() {
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon();
     }
 }

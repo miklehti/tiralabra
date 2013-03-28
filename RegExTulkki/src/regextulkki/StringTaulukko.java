@@ -122,6 +122,9 @@ public class StringTaulukko {
      * @return StringTaulukon alkio
      */
     public String annaTaulukonAlkionArvo(int taulukonIndeksi) {
+        if(taulukonIndeksi>=alkioidenLKM | taulukonIndeksi<0){
+            return "false";
+        }
         return taulukko[taulukonIndeksi];
     }
 

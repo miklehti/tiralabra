@@ -402,6 +402,15 @@ public class StringTaulukkoTest {
 
 
     }
+        @Test
+    public void annaTaulukonArvoKunIndeksiVaarin() {
+       String vastaus1= stringTaulukko.annaTaulukonAlkionArvo(-1);
+       String vastaus2= stringTaulukko.annaTaulukonAlkionArvo(11);
+        assertEquals("false", vastaus1);
+        assertEquals("false", vastaus2);
+
+
+    }
 
     @Test
     public void setTaulukko() {
