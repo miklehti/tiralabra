@@ -10,13 +10,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import regextulkki.Parseri;
+import regextulkki.StringTaulukko;
 
 /**
  *
  * @author lehtimik
  */
 public class TaiMerkkiTest {
-    
+        Parseri parseri;
+    StringTaulukko stringtaulukko;
+
     public TaiMerkkiTest() {
     }
     
@@ -30,6 +34,9 @@ public class TaiMerkkiTest {
     
     @Before
     public void setUp() {
+        
+        stringtaulukko = new StringTaulukko();
+        parseri = new Parseri(stringtaulukko);
     }
     
     @After

@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import regextulkki.Parseri;
+import regextulkki.StringTaulukko;
 
 /**
  *
@@ -17,6 +19,9 @@ import static org.junit.Assert.*;
  */
 public class DollarimerkkiTest {
     
+        Parseri parseri;
+    StringTaulukko stringtaulukko;
+
     public DollarimerkkiTest() {
     }
     
@@ -30,6 +35,9 @@ public class DollarimerkkiTest {
     
     @Before
     public void setUp() {
+        
+        stringtaulukko = new StringTaulukko();
+        parseri = new Parseri(stringtaulukko);
     }
     
     @After

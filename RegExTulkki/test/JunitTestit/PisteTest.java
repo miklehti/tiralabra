@@ -10,12 +10,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import regextulkki.Parseri;
+import regextulkki.StringTaulukko;
 
 /**
  * @author lehtimik
  */
 public class PisteTest {
-    
+        Parseri parseri;
+    StringTaulukko stringtaulukko;
+
     public PisteTest() {
     }
     
@@ -29,6 +33,9 @@ public class PisteTest {
     
     @Before
     public void setUp() {
+        
+        stringtaulukko = new StringTaulukko();
+        parseri = new Parseri(stringtaulukko);
     }
     
     @After
