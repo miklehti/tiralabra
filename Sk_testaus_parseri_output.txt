@@ -1,0 +1,4 @@
+pilkoStringTaulukkoon 389 merkillä kesti 120115nanosekuntia
+kayLapiStringTaulukko 389 merkillä kesti 781123 nanosekuntia
+pilkoStringTaulukkoon 17 merkillä kesti 4181nanosekuntia
+kayLapiStringTaulukko 17 merkillä kesti 25847 nanosekuntia
