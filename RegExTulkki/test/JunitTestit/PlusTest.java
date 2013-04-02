@@ -42,9 +42,183 @@ public class PlusTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void pelkkaPlus() {
+        stringtaulukko.pilkoStringTaulukkoon("+");
+        parseri.kayLapiStringTaulukko();
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPlusTulkinta());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusSelitys());
+        assertEquals(1, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+    @Test
+    public void pelkkaPlusmerkkiKysymysmerkki() {
+        stringtaulukko.pilkoStringTaulukkoon("+?");
+        parseri.kayLapiStringTaulukko();
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiTulkinta());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiSelitys());
+        assertEquals(1, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+
+    @Test
+    public void plusJaerikoismerkki() {
+        stringtaulukko.pilkoStringTaulukkoon("+*");
+        parseri.kayLapiStringTaulukko();
+
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0),parseri.getPlusTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1),parseri.getTahtiTulkinta());
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getTahtiSelitys());
+        
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+        @Test
+    public void plusKysymysmerkkiJaerikoismerkki() {
+        stringtaulukko.pilkoStringTaulukkoon("+?*");
+        parseri.kayLapiStringTaulukko();
+
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0),parseri.getPlusKysymysmerkkiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1),parseri.getTahtiTulkinta());
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getTahtiSelitys());
+        
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+
+    
+    @Test
+    public void plusJastringi() {
+        stringtaulukko.pilkoStringTaulukkoon("+a");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPlusTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), "a");
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusSelitys());
+         assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1),"false");
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        
+    }
+    
+        @Test
+    public void plusKysymysmerkkiJastringi() {
+        stringtaulukko.pilkoStringTaulukkoon("+?a");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), "a");
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiSelitys());
+         assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1),"false");
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        
+    }
+
+    @Test
+    public void plusJaErikoismerkkiErikoismerkki() {
+        stringtaulukko.pilkoStringTaulukkoon("+|?");
+        parseri.kayLapiStringTaulukko();
+
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPlusTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getTaiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), parseri.getKysymysmerkkiTulkinta());
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getTaiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(2), parseri.getKysymysmerkkiSelitys());
+
+        assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(3, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+        @Test
+    public void plusKysymysmerkkiJaErikoismerkkiErikoismerkki() {
+        stringtaulukko.pilkoStringTaulukkoon("+?+?");
+        parseri.kayLapiStringTaulukko();
+
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getPlusKysymysmerkkiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), "false");
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(2), "false");
+
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+
+    @Test
+    public void merkkiErikoismerkkiPlus() {
+        stringtaulukko.pilkoStringTaulukkoon("a|+");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), "a");
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getTaiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), parseri.getPlusTulkinta());
+
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusSelitys());
+        
+        
+        assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+    
+        @Test
+    public void merkkiErikoismerkkiPlusKysymysmerkki() {
+        stringtaulukko.pilkoStringTaulukkoon("a|+?");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), "a");
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getTaiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), parseri.getPlusKysymysmerkkiTulkinta());
+
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusKysymysmerkkiSelitys());
+        
+        
+        assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+    
+        @Test
+    public void merkkiMerkkiPlus() {
+        stringtaulukko.pilkoStringTaulukkoon("aa+");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), "a");
+         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), "a");
+         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2),parseri.getPlusTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(3),"false");
+
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
+
+        assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+        
+                @Test
+    public void merkkiMerkkiPlusKysymysmerkki() {
+        stringtaulukko.pilkoStringTaulukkoon("aa+?");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), "a");
+         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), "a");
+         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2),parseri.getPlusKysymysmerkkiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(3),"false");
+
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPlusKysymysmerkkiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
+
+        assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
 }

@@ -41,9 +41,95 @@ public class PisteTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void pelkkaPiste() {
+        stringtaulukko.pilkoStringTaulukkoon(".");
+        parseri.kayLapiStringTaulukko();
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPisteTulkinta());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPisteSelitys());
+        assertEquals(1, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+
+    @Test
+    public void pisteJaerikoismerkki() {
+        stringtaulukko.pilkoStringTaulukkoon(".+");
+        parseri.kayLapiStringTaulukko();
+
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0),parseri.getPisteTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1),parseri.getPlusTulkinta());
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPisteSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusSelitys());
+        
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+
+    
+    @Test
+    public void pisteJastringi() {
+        stringtaulukko.pilkoStringTaulukkoon(".a");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPisteTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), "a");
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPisteSelitys());
+         assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1),"false");
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        
+    }
+
+    @Test
+    public void pisteJaErikoismerkkiErikoismerkki() {
+        stringtaulukko.pilkoStringTaulukkoon(".+?");
+        parseri.kayLapiStringTaulukko();
+
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getPisteTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getPlusKysymysmerkkiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), "false");
+        
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPisteSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusKysymysmerkkiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(2), "false");
+
+        assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+
+    @Test
+    public void merkkiErikoismerkkiPiste() {
+        stringtaulukko.pilkoStringTaulukkoon("a?.");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), "a");
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getKysymysmerkkiTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), parseri.getPisteTulkinta());
+
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getKysymysmerkkiSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPisteSelitys());
+        
+        
+        assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
+    
+        @Test
+    public void merkkiMerkkiPiste() {
+        stringtaulukko.pilkoStringTaulukkoon("aa.");
+        parseri.kayLapiStringTaulukko();
+        
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), "a");
+         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), "a");
+         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2),parseri.getPisteTulkinta());
+        assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(3),"false");
+
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getPisteSelitys());
+        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
+
+        assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
+        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+    }
 }
