@@ -22,8 +22,9 @@ import java.util.Scanner;
  */
 public class Suorituskykytesti {
 
-    Parseri parseri;
+       Parseri parseri;
     StringTaulukko stringtaulukko;
+    private StringTaulukko tulkinnatTaulukkoon;
     private static Scanner lukija = new Scanner(System.in);
 
     public Suorituskykytesti() {
@@ -64,7 +65,7 @@ public class Suorituskykytesti {
 
         while (syottotiedosto.hasNextLine()) {
             stringtaulukko = new StringTaulukko();
-            parseri = new Parseri(stringtaulukko);
+            parseri = new Parseri(stringtaulukko,tulkinnatTaulukkoon);
             String rivi = syottotiedosto.nextLine();
             int rivinPituus = rivi.length();
 

@@ -19,8 +19,9 @@ import regextulkki.Parseri;
  */
 public class ParseriTest {
 
-    StringTaulukko stringTaulukko;
-    Parseri parseri;
+       Parseri parseri;
+    StringTaulukko stringtaulukko;
+    private StringTaulukko tulkinnatTaulukkoon;
 
     public ParseriTest() {
     }
@@ -35,7 +36,9 @@ public class ParseriTest {
 
     @Before
     public void setUp() {
-        stringTaulukko = new StringTaulukko();
+      tulkinnatTaulukkoon = new StringTaulukko();
+        stringtaulukko = new StringTaulukko();
+        parseri = new Parseri(stringtaulukko, tulkinnatTaulukkoon);
        
     }
 
@@ -45,16 +48,16 @@ public class ParseriTest {
 
     @Test
     public void kayLapiStringTaulukkoTest() {
-        stringTaulukko.pilkoStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
-         parseri = new Parseri(stringTaulukko);
+        stringtaulukko.pilkoStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
+         parseri = new Parseri(stringtaulukko,tulkinnatTaulukkoon);
          parseri.kayLapiStringTaulukko();
-        assertEquals(20, stringTaulukko.getTaulukko().length);
+        assertEquals(20, stringtaulukko.getTaulukko().length);
     }
     
         @Test
     public void getStringTaulukkoTest() {
-        stringTaulukko.pilkoStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
-         parseri = new Parseri(stringTaulukko);
+        stringtaulukko.pilkoStringTaulukkoon("a.?a$aa+a^a|a*aaa\\");
+         parseri = new Parseri(stringtaulukko, tulkinnatTaulukkoon);
          StringTaulukko tulos = parseri.getStringTaulukko();
           assertEquals(20, tulos.getTaulukko().length);
     }

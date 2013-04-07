@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import regextulkki.KasitteleStringi;
 import regextulkki.Parseri;
 import regextulkki.StringTaulukko;
 
@@ -21,6 +22,7 @@ public class TaiMerkkiTest {
 
     Parseri parseri;
     StringTaulukko stringtaulukko;
+    private StringTaulukko tulkinnatTaulukkoon;
 
     public TaiMerkkiTest() {
     }
@@ -36,8 +38,9 @@ public class TaiMerkkiTest {
     @Before
     public void setUp() {
 
+  tulkinnatTaulukkoon = new StringTaulukko();
         stringtaulukko = new StringTaulukko();
-        parseri = new Parseri(stringtaulukko);
+        parseri = new Parseri(stringtaulukko, tulkinnatTaulukkoon);
     }
 
     @After
@@ -46,46 +49,50 @@ public class TaiMerkkiTest {
 
     @Test
     public void pelkkaTai() {
+        KasitteleStringi.nollaaStaattisetMuuttujat();
         stringtaulukko.pilkoStringTaulukkoon("|");
         parseri.kayLapiStringTaulukko();
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getTaiTulkinta());
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
         assertEquals(1, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
-        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        assertEquals(1, KasitteleStringi.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
     }
 
     @Test
     public void taiJaerikoismerkki() {
+        KasitteleStringi.nollaaStaattisetMuuttujat();
         stringtaulukko.pilkoStringTaulukkoon("|+");
         parseri.kayLapiStringTaulukko();
 
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getTaiTulkinta());
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getPlusTulkinta());
 
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusSelitys());
 
         assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
-        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        assertEquals(2, KasitteleStringi.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
     }
 
     @Test
     public void taiJastringi() {
+        KasitteleStringi.nollaaStaattisetMuuttujat();
         stringtaulukko.pilkoStringTaulukkoon("|a");
         parseri.kayLapiStringTaulukko();
 
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(0), parseri.getTaiTulkinta());
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), "a");
 
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
         assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
-        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        assertEquals(1, KasitteleStringi.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
 
     }
 
     @Test
     public void taiJaErikoismerkkiErikoismerkki() {
+        KasitteleStringi.nollaaStaattisetMuuttujat();
         stringtaulukko.pilkoStringTaulukkoon("|+?");
         parseri.kayLapiStringTaulukko();
 
@@ -93,16 +100,17 @@ public class TaiMerkkiTest {
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getPlusKysymysmerkkiTulkinta());
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), "false");
 
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusKysymysmerkkiSelitys());
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(2), "false");
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getPlusKysymysmerkkiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(2), "false");
 
         assertEquals(2, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
-        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        assertEquals(2, KasitteleStringi.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
     }
 
     @Test
     public void merkkiErikoismerkkiTai() {
+        KasitteleStringi.nollaaStaattisetMuuttujat();
         stringtaulukko.pilkoStringTaulukkoon("a?|");
         parseri.kayLapiStringTaulukko();
 
@@ -110,16 +118,17 @@ public class TaiMerkkiTest {
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(1), parseri.getKysymysmerkkiTulkinta());
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), parseri.getTaiTulkinta());
 
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getKysymysmerkkiSelitys());
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getTaiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getKysymysmerkkiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), parseri.getTaiSelitys());
 
 
         assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
-        assertEquals(2, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        assertEquals(2, KasitteleStringi.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
     }
 
     @Test
     public void merkkiMerkkiTai() {
+        KasitteleStringi.nollaaStaattisetMuuttujat();
         stringtaulukko.pilkoStringTaulukkoon("aa|");
         parseri.kayLapiStringTaulukko();
 
@@ -128,10 +137,10 @@ public class TaiMerkkiTest {
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(2), parseri.getTaiTulkinta());
         assertEquals(parseri.getTulkinnatTaulukkoon().annaTaulukonAlkionArvo(3), "false");
 
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
-        assertEquals(parseri.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(0), parseri.getTaiSelitys());
+        assertEquals(KasitteleStringi.getKaytetytRegularExpressionMerkit().annaTaulukonAlkionArvo(1), "false");
 
         assertEquals(3, parseri.getTulkinnatTaulukkoon().getAlkioidenLKM());
-        assertEquals(1, parseri.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
+        assertEquals(1, KasitteleStringi.getKaytetytRegularExpressionMerkit().getAlkioidenLKM());
     }
 }

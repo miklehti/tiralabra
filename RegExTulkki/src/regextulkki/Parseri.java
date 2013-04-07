@@ -19,40 +19,23 @@ public class Parseri {
      */
     private StringTaulukko tulkinnatTaulukkoon;
     /**
-     * listataan mitä regexejä on tulkittu
-     */
-    private StringTaulukko kaytetytRegularExpressionMerkit;
-    /**
      * erikoismerkit regexissä
      */
-    private String erikoismerkit = "[()+$.|^*?\\";
+    private String erikoismerkit = "[+$.|^*?\\";
 
     /**
-     * Konstruktori. Tarvitsee stringTaulukon.
+     * Konstruktori. Tarvitsee kolme StringTaulukkoa.
      *
      * @param stringTaulukko stringTaulukko parsittavaksi.
+     * @param stringTaulukko stringTaulukko parsittavaksi.
+     * @param kaytetytRegularExpressionMerkit stringTaulukko käytetyistä
+     * regularexpressioneista.
      */
-    public Parseri(StringTaulukko stringTaulukko) {
+    public Parseri(StringTaulukko stringTaulukko, StringTaulukko tulkinnatTaulukkoon) {
         this.stringTaulukko = stringTaulukko;
-        tulkinnatTaulukkoon = new StringTaulukko();
-        kaytetytRegularExpressionMerkit = new StringTaulukko();
+        this.tulkinnatTaulukkoon = tulkinnatTaulukkoon;
+
     }
-    /**
-     * erikoismerkit lisätään vain kerran kaytetytRegularExpressionMerkit
-     * taulukkoon, jos esim. piste on jo siellä on flag false eikäs sitä enää
-     * lisätä
-     */
-    private boolean lisataankoPiste = true;
-    private boolean lisataankoKysymysmerkki = true;
-    private boolean lisataankoKysymysmerkkiKysymysmerkki = true;
-    private boolean lisataankoDollari = true;
-    private boolean lisataankoTahti = true;
-    private boolean lisataankoTahtiKysymysmerkki = true;
-    private boolean lisataankoTaiMerkki = true;
-    private boolean lisataankoCaret = true;
-    private boolean lisataankoBacklash = true;
-    private boolean lisataankoPlusmerkki = true;
-    private boolean lisataankoPlusmerkkiKysymysmerkki = true;
     /**
      * tulkinnat stringmuodossa, nämä lisätään aina tulkinnatTaulukkoon nimiseen
      * StringTaulukkoon kun niihin viitataan tutkittavassa Stringissä, voidaan
@@ -68,6 +51,7 @@ public class Parseri {
     private String kysymysmerkkiKysymysmerkkiTulkinta = "(edelllä oleva termi(t) ovat vapaaehtoisia, laiska versio)";
     private String tahtiKysymysmerkkiTulkinta = "(toistetaan edellistä merkkiä 0-n kertaa, ahne versio)";
     private String plusKysymysmerkkiTulkinta = "(toistetaan edellistä merkkiä 1-n kertaa, ahne versio)";
+    private String hakasulkuTulkinta = "[yksi seuraavista:";
     /**
      * Selitys kaikille käytetyille regular expressioneille stringmuodossa,
      * käytetään kerran vaikka olisi useampi samaanlainen merkki
@@ -83,6 +67,7 @@ public class Parseri {
     private String tahtiKysymysmerkkiSelitys = "\"*?\" Tähti-kysymysmerkki tarkoittaa että edellinen arvo toistetaan nolla-ääretön kertaa. \n Kysymysmerkki tähden perässä tarkoittaa että kyseessä on laiska versio. \nLaiska versio takoittaa että regeular expression yrittää ensin minimisetillä ja sitten kasvattaa hakukriteeriä kunnes löytyy\n";
     private String plusKysymysmerkkiSelitys = "\"\\\"+?\\\" Plus-kysymysmerkki tarkoittaa että edellinen arvo toistetaan yksi-ääretön kertaa \\n Kysymysmerkki plussan perässä tarkoittaa että kyseessä on laiska versio. \\nLaiska versio takoittaa että regeular expression yrittää ensin minimisetillä ja sitten kasvattaa hakukriteeriä kunnes löytyy\\n\";";
     private String backlashSelitys = "\"\\\" kenoviiva tarkoittaa että seuraava merkki ei olekaan erikoismerkki\n";
+    private String hakasulkuSelitys = "[] hakasulut tarkoittavat joukkoa josta valitaan yksi vaihtoehto";
 
     /**
      * Metodi tulkitsee erkoismerkit ja kutsuu sitä vastaavaa metodia
@@ -93,8 +78,11 @@ public class Parseri {
      */
     public void tulkitseErikoismerkki(String tutkittava, int indeksi) {
         if (tutkittava.equals("\\")) {
-            tutkiBacklash();
-            lisataankoBacklashKaytetytRegularExpressionMerkkeihin();
+            if (tutkiBacklash() == true) {
+                lisataankoBacklashKaytetytRegularExpressionMerkkeihin();
+            }
+
+
         }
         if (tutkittava.equals("$")) {
             tutkiDollari();
@@ -125,6 +113,11 @@ public class Parseri {
             boolean PlusKysymysmerkki = tutkiPlusMerkki();
             lisataankoPlusMerkkiKaytetytRegularExpressionMerkkeihin(PlusKysymysmerkki);
         }
+        if (tutkittava.equals("[")) {
+            lisataankoHakasulkuMerkkiKaytetytRegularExpressionMerkkeihin();
+            tutkiHakasulkuMerkki();
+            
+        }
 
 
 
@@ -142,9 +135,8 @@ public class Parseri {
             if (onkoErikoismerkki(tutkittava) == true) {
                 tulkitseErikoismerkki(tutkittava, stringTaulukko.getTutkittavaIndeksi());
             } else {
-                tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(tutkittava);
-                stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-            }           
+                lisaaMerkkiSellaisenaanJaKasvataIndeksia(tutkittava, 1);
+            }
         }
     }
 
@@ -182,15 +174,6 @@ public class Parseri {
     }
 
     /**
-     * Metodi palauttaa kaytetyt regex merrkit
-     *
-     * @return palauttaa StringTaulukon kaikista käytetyistä luokista
-     */
-    public StringTaulukko getKaytetytRegularExpressionMerkit() {
-        return kaytetytRegularExpressionMerkit;
-    }
-
-    /**
      * Metodi palauttaa tulkinnat regex lauseesta
      *
      * @return palauttaa StringTaulukon regex tulkinnoista
@@ -204,9 +187,9 @@ public class Parseri {
      * niin lisätään ja merkitään lisätyksi.
      */
     public void lisataankoPisteKaytetytRegularExpressionMerkkeihin() {
-        if (lisataankoPiste == true) {
-            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(pisteSelitys);
-            lisataankoPiste = false;
+        if (KasitteleStringi.isLisataankoPiste() == true) {
+            KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(pisteSelitys);
+            KasitteleStringi.setLisataankoPiste(false);
         }
     }
 
@@ -215,9 +198,9 @@ public class Parseri {
      * niin lisätään ja merkitään lisätyksi.
      */
     public void lisataankoDollariKaytetytRegularExpressionMerkkeihin() {
-        if (lisataankoDollari == true) {
-            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(dollariSelitys);
-            lisataankoDollari = false;
+        if (KasitteleStringi.isLisataankoDollari() == true) {
+            KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(dollariSelitys);
+            KasitteleStringi.setLisataankoDollari(false);
         }
     }
 
@@ -226,9 +209,9 @@ public class Parseri {
      * ole niin lisätään ja merkitään lisätyksi.
      */
     public void lisataankoBacklashKaytetytRegularExpressionMerkkeihin() {
-        if (lisataankoBacklash == true) {
-            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(backlashSelitys);
-            lisataankoBacklash = false;
+        if (KasitteleStringi.isLisataankoBacklash() == true) {
+            KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(backlashSelitys);
+            KasitteleStringi.setLisataankoBacklash(false);
         }
     }
 
@@ -237,9 +220,9 @@ public class Parseri {
      * ole niin lisätään ja merkitään lisätyksi.
      */
     public void lisataankoTaiMerkkiKaytetytRegularExpressionMerkkeihin() {
-        if (lisataankoTaiMerkki == true) {
-            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(taiSelitys);
-            lisataankoTaiMerkki = false;
+        if (KasitteleStringi.isLisataankoTaiMerkki() == true) {
+            KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(taiSelitys);
+            KasitteleStringi.setLisataankoTaiMerkki(false);
         }
     }
 
@@ -252,15 +235,15 @@ public class Parseri {
      */
     public void lisataankoKysymysmerkkiKaytetytRegularExpressionMerkkeihin(boolean kaksiKysymysmerkkia) {
         if (kaksiKysymysmerkkia == false) {
-            if (lisataankoKysymysmerkki == true) {
-                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(kysymysmerkkiSelitys);
-                lisataankoKysymysmerkki = false;
+            if (KasitteleStringi.isLisataankoKysymysmerkki() == true) {
+                KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(kysymysmerkkiSelitys);
+                KasitteleStringi.setLisataankoKysymysmerkki(false);
             }
         }
         if (kaksiKysymysmerkkia == true) {
-            if (lisataankoKysymysmerkkiKysymysmerkki == true) {
-                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(kysymysmerkkiKysymysmerkkiSelitys);
-                lisataankoKysymysmerkkiKysymysmerkki = false;
+            if (KasitteleStringi.isLisataankoKysymysmerkkiKysymysmerkki() == true) {
+                KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(kysymysmerkkiKysymysmerkkiSelitys);
+                KasitteleStringi.setLisataankoKysymysmerkkiKysymysmerkki(false);
             }
         }
 
@@ -274,15 +257,15 @@ public class Parseri {
      */
     public void lisataankoTahtiMerkkiKaytetytRegularExpressionMerkkeihin(boolean tahtiKysymysmerkki) {
         if (tahtiKysymysmerkki == false) {
-            if (lisataankoTahti == true) {
-                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(tahtiSelitys);
-                lisataankoTahti = false;
+            if (KasitteleStringi.isLisataankoTahti() == true) {
+                KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(tahtiSelitys);
+                KasitteleStringi.setLisataankoTahtiKysymysmerkki(false);
             }
         }
         if (tahtiKysymysmerkki == true) {
-            if (lisataankoTahtiKysymysmerkki == true) {
-                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(tahtiKysymysmerkkiSelitys);
-                lisataankoTahtiKysymysmerkki = false;
+            if (KasitteleStringi.isLisataankoTahtiKysymysmerkki() == true) {
+                KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(tahtiKysymysmerkkiSelitys);
+                KasitteleStringi.setLisataankoTahtiKysymysmerkki(false);
             }
         }
 
@@ -296,15 +279,15 @@ public class Parseri {
      */
     public void lisataankoPlusMerkkiKaytetytRegularExpressionMerkkeihin(boolean PlusKysymysmerkki) {
         if (PlusKysymysmerkki == false) {
-            if (lisataankoPlusmerkki == true) {
-                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(plusSelitys);
-                lisataankoPlusmerkki = false;
+            if (KasitteleStringi.isLisataankoPlusmerkki() == true) {
+                KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(plusSelitys);
+                KasitteleStringi.setLisataankoPlusmerkki(false);
             }
         }
         if (PlusKysymysmerkki == true) {
-            if (lisataankoPlusmerkkiKysymysmerkki == true) {
-                kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(plusKysymysmerkkiSelitys);
-                lisataankoPlusmerkkiKysymysmerkki = false;
+            if (KasitteleStringi.isLisataankoPlusmerkkiKysymysmerkki() == true) {
+                KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(plusKysymysmerkkiSelitys);
+                KasitteleStringi.setLisataankoPlusmerkkiKysymysmerkki(false);
             }
         }
 
@@ -315,9 +298,20 @@ public class Parseri {
      * ole niin lisätään ja merkitään lisätyksi.
      */
     public void lisataankoCaretmerkkiKaytetytRegularExpressionMerkkeihin() {
-        if (lisataankoCaret == true) {
-            kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(caretSelitys);
-            lisataankoCaret = false;
+        if (KasitteleStringi.isLisataankoCaret() == true) {
+            KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(caretSelitys);
+            KasitteleStringi.setLisataankoCaret(false);
+        }
+    }
+
+    /**
+     * Metodi tutkii onko hakasulkumerkki jo lisätty käytettyihin regexeihin.
+     * Jos ei ole niin lisätään ja merkitään lisätyksi.
+     */
+    public void lisataankoHakasulkuMerkkiKaytetytRegularExpressionMerkkeihin() {
+        if (KasitteleStringi.isLisataankoHakasulkumerkki() == true) {
+            KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(hakasulkuSelitys);
+            KasitteleStringi.setLisataankoCaret(false);
         }
     }
 
@@ -326,8 +320,7 @@ public class Parseri {
      * stringTaulukkoon. Samalla metodi kasvatta tutkittavaa kohtaa yhdellä
      */
     public void tutkiPiste() {
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(pisteTulkinta);
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(pisteTulkinta, 1);
     }
 
     /**
@@ -335,23 +328,49 @@ public class Parseri {
      * stringTaulukkoon. Samalla metodi kasvatta tutkittavaa kohtaa yhdellä
      */
     public void tutkiDollari() {
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(dollariTulkinta);
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(dollariTulkinta, 1);
     }
 
     /**
-     * Metodi ignooraa kenoviivan se toimii escapena, sille ei ole tulkintaa.
-     * Samoin seuraava merkki (joson) lisätään sellaisenaan tulkintaan
-     * kirjaimellisesti, ei merkin tulkintaa
+     * Metodi käsittelee kenoviivaa. Jos se on viimeinen merkki se tulkitaan
+     * kirjaimellisesti ja lisätään sellaisenaan. Jos sen jälkeen on
+     * erikoismerkki, vain erikoismerkki lisätään sellaisenaan, ei kenoviivaa
+     * Jos kenoviivan jälkeen on kirjain, etsitään kenoviiva-kirjainyhditelmälle
+     * tulkinta. Jos tulkintaa ei ole tulkitaan kenoviiva-kirjain
+     * kirjaimellisesti.
      */
-    public void tutkiBacklash() {
+    public boolean tutkiBacklash() {
         String seuraavaMerkki = stringTaulukko.annaTaulukonAlkionArvo((stringTaulukko.getTutkittavaIndeksi() + 1));
-        if (!seuraavaMerkki.equals("false")) {
-            tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(seuraavaMerkki);
-            stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        if (seuraavaMerkki.equals("false")) {
+            lisaaMerkkiSellaisenaanJaKasvataIndeksia(stringTaulukko.annaTaulukonAlkionArvo(stringTaulukko.getTutkittavaIndeksi()), 1);
+            return false;
         }
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
+        if (onkoErikoismerkki(seuraavaMerkki)) {
+            lisaaMerkkiSellaisenaanJaKasvataIndeksia(seuraavaMerkki, 2);
+            return true;
+        }
 
+
+        String tulkinta = BacklashTulkinta.tutkiBacklash(seuraavaMerkki);
+        if (tulkinta.equals("false")) {
+            lisaaMerkkiSellaisenaanJaKasvataIndeksia(stringTaulukko.annaTaulukonAlkionArvo((stringTaulukko.getTutkittavaIndeksi())), 1);
+            return false;
+        }
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(tulkinta, 2);
+        return false;
+
+    }
+
+    /**
+     * metodi lisää merkin tulkintoihin ja kasvattaa tutkittavaa indeksiä
+     * yhdellä
+     *
+     * @param seuraavaMerkki lisattava merkki
+     *
+     */
+    public void lisaaMerkkiSellaisenaanJaKasvataIndeksia(String seuraavaMerkki, int paljonkoKasvatetaan) {
+        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(seuraavaMerkki);
+        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + paljonkoKasvatetaan);
     }
 
     /**
@@ -363,12 +382,10 @@ public class Parseri {
      */
     public boolean tutkiTahtiMerkki() {
         if (onkoKysymysmerkkiPerassa()) {
-            tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(tahtiKysymysmerkkiTulkinta);
-            stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 2);
+            lisaaMerkkiSellaisenaanJaKasvataIndeksia(tahtiKysymysmerkkiTulkinta, 2);
             return true;
         }
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(tahtiTulkinta);
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(tahtiTulkinta, 1);
         return false;
     }
 
@@ -381,12 +398,10 @@ public class Parseri {
      */
     public boolean tutkiPlusMerkki() {
         if (onkoKysymysmerkkiPerassa()) {
-            tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(plusKysymysmerkkiTulkinta);
-            stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 2);
+            lisaaMerkkiSellaisenaanJaKasvataIndeksia(plusKysymysmerkkiTulkinta, 2);
             return true;
         }
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(plusTulkinta);
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(plusTulkinta, 1);
         return false;
     }
 
@@ -395,8 +410,20 @@ public class Parseri {
      * stringTaulukkoon. Samalla metodi kasvatta tutkittavaa kohtaa yhdellä.
      */
     public void tutkiTaiMerkki() {
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(taiTulkinta);
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(taiTulkinta, 1);
+    }
+
+    /**
+     * Metodi lisää hakasulku-merkkiä vastaavan tulkinnan omassa oliossa ja
+     * lisää tulkinnat tulkinnatTaulukkoon nimiseen stringTaulukkoon. Samalla
+     * metodi kasvatta tutkittavaa kohtaa siihen kohtaan missä on
+     * sulkevahakasulku+1.
+     */
+    public void tutkiHakasulkuMerkki() {
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(hakasulkuTulkinta, 1);
+
+        HakasulkuParseri hakasulkuParseri = new HakasulkuParseri(stringTaulukko, tulkinnatTaulukkoon);
+        hakasulkuParseri.kayLapiStringTaulukko();
     }
 
     /**
@@ -408,13 +435,10 @@ public class Parseri {
      */
     public boolean tutkiKysymysmerkki() {
         if (onkoKysymysmerkkiPerassa()) {
-            stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 2);
-            tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(kysymysmerkkiKysymysmerkkiTulkinta);
+            lisaaMerkkiSellaisenaanJaKasvataIndeksia(kysymysmerkkiKysymysmerkkiTulkinta, 2);
             return true;
         }
-
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(kysymysmerkkiTulkinta);
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(kysymysmerkkiTulkinta, 1);
         return false;
     }
 
@@ -452,8 +476,7 @@ public class Parseri {
      * yhdellä.
      */
     public void tutkiCaretMerkki() {
-        stringTaulukko.setTutkittavaIndeksi(stringTaulukko.getTutkittavaIndeksi() + 1);
-        tulkinnatTaulukkoon.lisaaStringKokonaisenaTaulukkoon(caretTulkinta);
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(caretTulkinta, 1);
     }
 
     /**
@@ -608,5 +631,21 @@ public class Parseri {
      */
     public String getTaiTulkinta() {
         return taiTulkinta;
+    }
+    
+      /**
+     * Metodi palauttaa hakasulun selityksen
+     */
+
+    public String getHakasulkuSelitys() {
+        return hakasulkuSelitys;
+    }
+    
+      /**
+     * Metodi palauttaa hakasulun tulkinnan
+     */
+
+    public String getHakasulkuTulkinta() {
+        return hakasulkuTulkinta;
     }
 }
