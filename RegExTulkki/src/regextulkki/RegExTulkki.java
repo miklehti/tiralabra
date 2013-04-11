@@ -21,7 +21,7 @@ public class RegExTulkki {
         
         String vastaus = PopKysyIlmoita.kysyString("Anna säännöllinen lause"); 
         KasitteleStringi kasitteleStringi = new KasitteleStringi(vastaus);
-       
+       kasitteleStringi.annaEsimerkkivastauksia();
         PopKysyIlmoita.ilmoita(kasitteleStringi.getTulkinnatTaulukkoon().toString());
         PopKysyIlmoita.ilmoita(kasitteleStringi.getKaytetytRegularExpressionMerkit().toString());
     }

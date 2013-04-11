@@ -51,140 +51,153 @@ public class KasitteleStringi {
     private static boolean lisataankoCaretHakasulkumerkki = true;
 
     /**
-     * Konstruktori purkaa stringin parseria varten osiin. KESKEN
+     * Konstruktori luo uuden olion
      *
      * @param vastaus käsiteltävä stringi.
      */
     public KasitteleStringi(String vastaus) {
         tulkinnatTaulukkoon = new StringTaulukko();
         stringTaulukko.pilkoStringTaulukkoon(vastaus);
+
+    }
+
+    /**
+     * Metodi purkaa stringin parseria varten osiin. Käyttää pinoa apuna
+     *
+     * @param vastaus käsiteltävä stringi.
+     */
+    public void annaEsimerkkivastauksia() {
+        StringTaulukko tutkittavaPalanen = annaTutkittavaPalanen();
+        for(int i = 0; i<stringTaulukko.getAlkioidenLKM();i++){
+            if(stringTaulukko.annaTaulukonAlkionArvo(i).equals("(")){
+                
+               tutkittavaPalanen = annaTutkittavaPalanen();
+            }
         Parseri parseri = new Parseri(stringTaulukko, tulkinnatTaulukkoon);
         parseri.kayLapiStringTaulukko();
+        }
     }
     
-     /**
+       /**
+     * Metodi antaa sulkujen välisen palasen 
+     *
+     * @param vastaus käsiteltävä stringi.
+     */
+    public StringTaulukko annaTutkittavaPalanen(){
+        StringTaulukko palanen = new StringTaulukko();
+        return palanen;
+    }
+
+    /**
      * metodi muuttaa hakasulkumerkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoHakasulkumerkki(boolean lisataankoHakasulkumerkki) {
         KasitteleStringi.lisataankoHakasulkumerkki = lisataankoHakasulkumerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa hakasulkumerkin boolean arvon
      */
-
     public static boolean isLisataankoHakasulkumerkki() {
         return lisataankoHakasulkumerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa kenoviivan boolean arvon
      */
     public static boolean isLisataankoBacklash() {
         return lisataankoBacklash;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \W-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_W() {
         return lisataankoBacklash_W;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \W arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoBacklash_W(boolean lisataankoBacklashWmerkki) {
         KasitteleStringi.lisataankoBacklash_W = lisataankoBacklashWmerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa hattumerkin boolean arvon
      */
-
     public static boolean isLisataankoCaret() {
         return lisataankoCaret;
     }
-    
-      /**
+
+    /**
      * metodi palautaa dollarin boolean arvon
      */
-
     public static boolean isLisataankoDollari() {
         return lisataankoDollari;
     }
-  /**
+
+    /**
      * metodi palautaa kysymysmerkin boolean arvon
      */
     public static boolean isLisataankoKysymysmerkki() {
         return lisataankoKysymysmerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa ??-merkin boolean arvon
      */
-
     public static boolean isLisataankoKysymysmerkkiKysymysmerkki() {
         return lisataankoKysymysmerkkiKysymysmerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa piste boolean arvon
      */
-
     public static boolean isLisataankoPiste() {
         return lisataankoPiste;
     }
 
-      /**
+    /**
      * metodi palautaa plusmerkin boolean arvon
      */
-    
     public static boolean isLisataankoPlusmerkki() {
         return lisataankoPlusmerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa +?-merkin boolean arvon
      */
-
     public static boolean isLisataankoPlusmerkkiKysymysmerkki() {
         return lisataankoPlusmerkkiKysymysmerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa *-merkin boolean arvon
      */
-
     public static boolean isLisataankoTahti() {
         return lisataankoTahti;
     }
-    
-      /**
+
+    /**
      * metodi palautaa *?-merkin boolean arvon
      */
-
     public static boolean isLisataankoTahtiKysymysmerkki() {
         return lisataankoTahtiKysymysmerkki;
     }
 
-    
-      /**
+    /**
      * metodi palautaa |-merkin boolean arvon
      */
     public static boolean isLisataankoTaiMerkki() {
         return lisataankoTaiMerkki;
     }
 
-    
-      /**
+    /**
      * metodi muuttaa \-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
@@ -192,49 +205,44 @@ public class KasitteleStringi {
     public static void setLisataankoBacklash(boolean arvo) {
         lisataankoBacklash = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa hattumerkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoCaret(boolean arvo) {
         lisataankoCaret = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa dollarimerkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoDollari(boolean arvo) {
         lisataankoDollari = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa kysymysmerkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoKysymysmerkki(boolean arvo) {
         lisataankoKysymysmerkki = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa ??-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoKysymysmerkkiKysymysmerkki(boolean arvo) {
         lisataankoKysymysmerkkiKysymysmerkki = arvo;
     }
 
-    
-      /**
+    /**
      * metodi muuttaa piste-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
@@ -242,19 +250,17 @@ public class KasitteleStringi {
     public static void setLisataankoPiste(boolean arvo) {
         lisataankoPiste = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa plus-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoPlusmerkki(boolean arvo) {
         lisataankoPlusmerkki = arvo;
     }
 
-    
-      /**
+    /**
      * metodi muuttaa +?-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
@@ -262,72 +268,65 @@ public class KasitteleStringi {
     public static void setLisataankoPlusmerkkiKysymysmerkki(boolean arvo) {
         lisataankoPlusmerkkiKysymysmerkki = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa *-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoTahti(boolean arvo) {
         lisataankoTahti = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa *?-merkikn arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoTahtiKysymysmerkki(boolean arvo) {
         lisataankoTahtiKysymysmerkki = arvo;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa |-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoTaiMerkki(boolean arvo) {
         lisataankoTaiMerkki = arvo;
     }
-    
-      /**
+
+    /**
      * metodi palautaa käytetyt regularexpressionit
      */
-
     public static StringTaulukko getKaytetytRegularExpressionMerkit() {
         return kaytetytRegularExpressionMerkit;
     }
-    
-      /**
+
+    /**
      * metodi palautaa tulkinnat
      */
-
     public StringTaulukko getTulkinnatTaulukkoon() {
         return tulkinnatTaulukkoon;
     }
-    
-      /**
+
+    /**
      * metodi lisää selityksen käytetyille expressionmerkeille
      */
-
     public static void lisaakaytetytRegularExpressionMerkkeihin(String selitys) {
         kaytetytRegularExpressionMerkit.lisaaStringKokonaisenaTaulukkoon(selitys);
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \w arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoBacklash_w(boolean lisataankoBacklash_w) {
         KasitteleStringi.lisataankoBacklash_w = lisataankoBacklash_w;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \t-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
@@ -335,114 +334,102 @@ public class KasitteleStringi {
     public static void setLisataankoBacklash_t(boolean lisataankoBacklash_t) {
         KasitteleStringi.lisataankoBacklash_t = lisataankoBacklash_t;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \s-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoBacklash_s(boolean lisataankoBacklash_s) {
         KasitteleStringi.lisataankoBacklash_s = lisataankoBacklash_s;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \d-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoBacklash_d(boolean lisataankoBacklash_d) {
         KasitteleStringi.lisataankoBacklash_d = lisataankoBacklash_d;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \b-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoBacklash_b(boolean lisataankoBacklash_b) {
         KasitteleStringi.lisataankoBacklash_b = lisataankoBacklash_b;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \S-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoBacklash_S(boolean lisataankoBacklash_S) {
         KasitteleStringi.lisataankoBacklash_S = lisataankoBacklash_S;
     }
-    
-      /**
+
+    /**
      * metodi muuttaa \D-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoBacklash_D(boolean lisataankoBacklash_D) {
         KasitteleStringi.lisataankoBacklash_D = lisataankoBacklash_D;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \w-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_w() {
         return lisataankoBacklash_w;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \t-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_t() {
         return lisataankoBacklash_t;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \s-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_s() {
         return lisataankoBacklash_s;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \d-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_d() {
         return lisataankoBacklash_d;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \b-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_b() {
         return lisataankoBacklash_b;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \S-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_S() {
         return lisataankoBacklash_S;
     }
-    
-      /**
+
+    /**
      * metodi palautaa \D-merkin boolean arvon
      */
-
     public static boolean isLisataankoBacklash_D() {
         return lisataankoBacklash_D;
     }
 
-      /**
+    /**
      * metodi muuttaa viiva-merkin arvoa
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
@@ -450,34 +437,31 @@ public class KasitteleStringi {
     public static void setLisataankoViivamerkki(boolean lisataankoViivamerkki) {
         KasitteleStringi.lisataankoViivamerkki = lisataankoViivamerkki;
     }
-    
-      /**
-     * metodi muuttaa hattumerkin  hakasulkujen sisällä
+
+    /**
+     * metodi muuttaa hattumerkin hakasulkujen sisällä
      *
      * @param lisataankoHakasulkumerkki lisättävä arvo
      */
-
     public static void setLisataankoCaretHakasulkumerkki(boolean lisataankoCaretHakasulkumerkki) {
         KasitteleStringi.lisataankoCaretHakasulkumerkki = lisataankoCaretHakasulkumerkki;
     }
 
-      /**
+    /**
      * metodi palautaa viivamerkin boolean arvon
      */
     public static boolean isLisataankoViivamerkki() {
         return lisataankoViivamerkki;
     }
-    
-      /**
+
+    /**
      * metodi palautaa hattumerkin hakasulkujen sisällä boolean arvon
      */
-
     public static boolean isLisataankoCaretHakasulkumerkki() {
         return lisataankoCaretHakasulkumerkki;
     }
 
-    
-      /**
+    /**
      * metodi nollaa staattiset muuttujat
      */
     public static void nollaaStaattisetMuuttujat() {
