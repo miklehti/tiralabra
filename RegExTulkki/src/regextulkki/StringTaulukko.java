@@ -190,6 +190,8 @@ public class StringTaulukko {
         }
         return aputaulukko;
     }
+    
+
 
     /**
      * Metodi kopioi tiettystä indeksistä lähtien loput taulukosta
@@ -202,6 +204,12 @@ public class StringTaulukko {
             aputaulukko[j - montakoPoistetaan] = taulukko[j];
         }
     }
+    
+        /**
+     * Metodi tutkii tarviiko taulukon kokoa tuplata
+
+     *
+     */
 
     public void tutkiTarviikoTuplataTaulukko() {
         if (alkioidenLKM == taulukko.length) {

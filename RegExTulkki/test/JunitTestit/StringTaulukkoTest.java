@@ -485,4 +485,7 @@ public class StringTaulukkoTest {
         assertEquals(taulunPituus4, 20);
 
     }
+    
+
+    
 }

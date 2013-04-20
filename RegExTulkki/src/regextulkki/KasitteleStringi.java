@@ -49,6 +49,7 @@ public class KasitteleStringi {
     private static boolean lisataankoBacklash_b = true;
     private static boolean lisataankoViivamerkki = true;
     private static boolean lisataankoCaretHakasulkumerkki = true;
+     private static boolean lisataankoSulkumerkki = true;
 
     /**
      * Konstruktori luo uuden olion
@@ -57,36 +58,39 @@ public class KasitteleStringi {
      */
     public KasitteleStringi(String vastaus) {
         tulkinnatTaulukkoon = new StringTaulukko();
+        stringTaulukko = new StringTaulukko();
         stringTaulukko.pilkoStringTaulukkoon(vastaus);
-
-    }
-
-    /**
-     * Metodi purkaa stringin parseria varten osiin. Käyttää pinoa apuna
-     *
-     * @param vastaus käsiteltävä stringi.
-     */
-    public void annaEsimerkkivastauksia() {
-        StringTaulukko tutkittavaPalanen = annaTutkittavaPalanen();
-        for(int i = 0; i<stringTaulukko.getAlkioidenLKM();i++){
-            if(stringTaulukko.annaTaulukonAlkionArvo(i).equals("(")){
-                
-               tutkittavaPalanen = annaTutkittavaPalanen();
-            }
         Parseri parseri = new Parseri(stringTaulukko, tulkinnatTaulukkoon);
         parseri.kayLapiStringTaulukko();
-        }
+
     }
-    
-       /**
-     * Metodi antaa sulkujen välisen palasen 
-     *
-     * @param vastaus käsiteltävä stringi.
-     */
-    public StringTaulukko annaTutkittavaPalanen(){
-        StringTaulukko palanen = new StringTaulukko();
-        return palanen;
-    }
+///**
+//     * Metodi purkaa stringin parseria varten osiin. Käyttää pinoa apuna
+//     *
+//     * @param vastaus käsiteltävä stringi.
+//     */
+//    public void annaEsimerkkivastauksia() {
+//        StringTaulukko tutkittavaPalanen = annaTutkittavaPalanen();
+//        for(int i = 0; i<stringTaulukko.getAlkioidenLKM();i++){
+//            if(stringTaulukko.annaTaulukonAlkionArvo(i).equals("(")){
+//                
+//               tutkittavaPalanen = annaTutkittavaPalanen();
+//            }
+//   
+//        }
+//    }
+//    
+//       /**
+//     * Metodi antaa sulkujen välisen palasen 
+//     *
+//     * @param vastaus käsiteltävä stringi.
+//     */
+//    public StringTaulukko annaTutkittavaPalanen(){
+//        StringTaulukko palanen = new StringTaulukko();
+//        return palanen;
+//    }
+
+
 
     /**
      * metodi muuttaa hakasulkumerkin arvoa
@@ -461,6 +465,28 @@ public class KasitteleStringi {
         return lisataankoCaretHakasulkumerkki;
     }
 
+    
+        /**
+     * metodi tutkii onko sulkumerkkiä käytetty
+     *
+     * 
+     */
+    public static boolean isLisataankoSulkumerkki() {
+        return lisataankoSulkumerkki;
+    }
+    
+      /**
+     * metodi muuttaa sulkumerkin arvoa
+     *
+     * @param lisataankoSulkumerkki lisättävä arvo
+     */
+
+    public static void setLisataankoSulkumerkki(boolean lisataankoSulkumerkki) {
+        KasitteleStringi.lisataankoSulkumerkki = lisataankoSulkumerkki;
+    }
+    
+    
+
     /**
      * metodi nollaa staattiset muuttujat
      */
@@ -488,7 +514,18 @@ public class KasitteleStringi {
         lisataankoBacklash_b = true;
         lisataankoViivamerkki = true;
         lisataankoCaretHakasulkumerkki = true;
+        lisataankoSulkumerkki = true;
 
 
     }
+
+     /**
+     * metodi palauttaa tutkittavan stringtaulukon
+     * @return luokan stringtaulukko
+     */
+    
+    public StringTaulukko getStringTaulukko() {
+        return stringTaulukko;
+    }
+    
 }

@@ -21,7 +21,7 @@ public class Parseri {
     /**
      * erikoismerkit regexissä
      */
-    private String erikoismerkit = "[+$.|^*?\\";
+    private String erikoismerkit = "[+$.|^*?\\(";
 
     /**
      * Konstruktori. Tarvitsee kolme StringTaulukkoa.
@@ -41,17 +41,18 @@ public class Parseri {
      * StringTaulukkoon kun niihin viitataan tutkittavassa Stringissä, voidaan
      * käyttää monta kertaa
      */
-    private String tahtiTulkinta = "(toistetaan edellistä merkkiä 0-n kertaa, ahne versio)";
-    private String taiTulkinta = "(tai)";
-    private String plusTulkinta = "(toistetaan edellistä merkkiä 1-n kertaa)";
-    private String dollariTulkinta = "(etsitään edellistä (<=) stringin lopusta)";
-    private String pisteTulkinta = "(mikä tahansa merkki)";
-    private String kysymysmerkkiTulkinta = "(edelllä oleva termi(t) ovat vapaaehtoisia, ahne versio)";
-    private String caretTulkinta = "((etsitään seuraavaa (=>) stringin alusta))";
-    private String kysymysmerkkiKysymysmerkkiTulkinta = "(edelllä oleva termi(t) ovat vapaaehtoisia, laiska versio)";
-    private String tahtiKysymysmerkkiTulkinta = "(toistetaan edellistä merkkiä 0-n kertaa, ahne versio)";
-    private String plusKysymysmerkkiTulkinta = "(toistetaan edellistä merkkiä 1-n kertaa, ahne versio)";
+    private String tahtiTulkinta = "{toistetaan edellistä merkkiä 0-n kertaa, ahne versio}";
+    private String taiTulkinta = "{tai}";
+    private String plusTulkinta = "{toistetaan edellistä merkkiä 1-n kertaa}";
+    private String dollariTulkinta = "{etsitään edellistä {<=} stringin lopusta}";
+    private String pisteTulkinta = "{mikä tahansa merkki}";
+    private String kysymysmerkkiTulkinta = "{edelllä oleva termi{t} ovat vapaaehtoisia, ahne versio}";
+    private String caretTulkinta = "{etsitään seuraavaa {=>}stringin alusta}";
+    private String kysymysmerkkiKysymysmerkkiTulkinta = "{edelllä oleva termi{t} ovat vapaaehtoisia, laiska versi}";
+    private String tahtiKysymysmerkkiTulkinta = "{toistetaan edellistä merkkiä 0-n kertaa, ahne versio}";
+    private String plusKysymysmerkkiTulkinta = "{toistetaan edellistä merkkiä 1-n kertaa, ahne versio}";
     private String hakasulkuTulkinta = "[yksi seuraavista:";
+    private String sulkuTulkinta = "{ryhmästä:";
     /**
      * Selitys kaikille käytetyille regular expressioneille stringmuodossa,
      * käytetään kerran vaikka olisi useampi samaanlainen merkki
@@ -68,6 +69,7 @@ public class Parseri {
     private String plusKysymysmerkkiSelitys = "\"\\\"+?\\\" Plus-kysymysmerkki tarkoittaa että edellinen arvo toistetaan yksi-ääretön kertaa \\n Kysymysmerkki plussan perässä tarkoittaa että kyseessä on laiska versio. \\nLaiska versio takoittaa että regeular expression yrittää ensin minimisetillä ja sitten kasvattaa hakukriteeriä kunnes löytyy\\n\";";
     private String backlashSelitys = "\"\\\" kenoviiva tarkoittaa että seuraava merkki ei olekaan erikoismerkki\n";
     private String hakasulkuSelitys = "[] hakasulut tarkoittavat joukkoa josta valitaan yksi vaihtoehto";
+    private String sulkuSelitys = "() sulut ryhmittelevät regex lauseita\n";
 
     /**
      * Metodi tulkitsee erkoismerkit ja kutsuu sitä vastaavaa metodia
@@ -116,7 +118,12 @@ public class Parseri {
         if (tutkittava.equals("[")) {
             lisataankoHakasulkuMerkkiKaytetytRegularExpressionMerkkeihin();
             tutkiHakasulkuMerkki();
-            
+
+        }
+        if (tutkittava.equals("(")) {
+            lisataankoSulkumerkkiKaytetytRegularExpressionMerkkeihin();
+            tutkiSulkumerkki();
+
         }
 
 
@@ -303,6 +310,17 @@ public class Parseri {
             KasitteleStringi.setLisataankoCaret(false);
         }
     }
+    
+        /**
+     * Metodi tutkii onko sulkumerkki jo lisätty käytettyihin regexeihin. Jos ei
+     * ole niin lisätään ja merkitään lisätyksi.
+     */
+    public void lisataankoSulkumerkkiKaytetytRegularExpressionMerkkeihin() {
+        if (KasitteleStringi.isLisataankoSulkumerkki() == true) {
+            KasitteleStringi.lisaakaytetytRegularExpressionMerkkeihin(sulkuSelitys);
+            KasitteleStringi.setLisataankoSulkumerkki(false);
+        }
+    }
 
     /**
      * Metodi tutkii onko hakasulkumerkki jo lisätty käytettyihin regexeihin.
@@ -329,6 +347,13 @@ public class Parseri {
      */
     public void tutkiDollari() {
         lisaaMerkkiSellaisenaanJaKasvataIndeksia(dollariTulkinta, 1);
+    }
+        /**
+     * Metodi lisää sulkumerkin vastaavan tulkinnan tulkinnatTaulukkoon nimiseen
+     * stringTaulukkoon. Samalla metodi kasvatta tutkittavaa kohtaa yhdellä
+     */
+    public void tutkiSulkumerkki() {
+        lisaaMerkkiSellaisenaanJaKasvataIndeksia(sulkuTulkinta, 1);
     }
 
     /**
@@ -632,20 +657,34 @@ public class Parseri {
     public String getTaiTulkinta() {
         return taiTulkinta;
     }
-    
-      /**
+
+    /**
      * Metodi palauttaa hakasulun selityksen
      */
-
     public String getHakasulkuSelitys() {
         return hakasulkuSelitys;
     }
-    
-      /**
+
+    /**
      * Metodi palauttaa hakasulun tulkinnan
      */
-
     public String getHakasulkuTulkinta() {
         return hakasulkuTulkinta;
     }
+
+     /**
+     * Metodi palauttaa sulun selityksen
+     */
+    public String getSulkuSelitys() {
+        return sulkuSelitys;
+    }
+
+     /**
+     * Metodi palauttaa sulun tulkinnan
+     */
+    public String getSulkuTulkinta() {
+        return sulkuTulkinta;
+    }
+    
+    
 }
