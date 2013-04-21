@@ -15,6 +15,9 @@ import regextulkki.Parseri;
 import regextulkki.StringTaulukko;
 import java.io.*;
 import java.util.Scanner;
+import regextulkki.PopKysyIlmoita;
+import regextulkki.StringTaulukkoTaulukko;
+import regextulkki.RegExTulkki;
 
 /**
  *
@@ -23,6 +26,8 @@ import java.util.Scanner;
 public class Suorituskykytesti {
 
        Parseri parseri;
+       StringTaulukkoTaulukko stringtaulukkotaulukko;
+        KasitteleStringi kasitteleStringi;
     StringTaulukko stringtaulukko;
     private StringTaulukko tulkinnatTaulukkoon;
     private static Scanner lukija = new Scanner(System.in);
@@ -47,7 +52,7 @@ public class Suorituskykytesti {
     }
 
     @Test
-    public void suorituskykytestiParserille() throws FileNotFoundException, InterruptedException {
+    public void suorituskykytestiRegexille() throws FileNotFoundException, InterruptedException {
         String syottoTiedosto = "C:\\Users\\Public\\Documents\\Omat\\tiralabra\\RegEx\\tiralabra\\Sk_testaus_parseri_input.txt";
         File syottoTiedostoKahva = new File(syottoTiedosto);
         Scanner syottotiedosto = new Scanner(syottoTiedostoKahva);
@@ -62,29 +67,39 @@ public class Suorituskykytesti {
         long startTimeKayLapiTaulukko;
         long endTimeKayLapiTaulukko;
         long durationKayLapiTaulukko;
+        
+        
+        
+          
+       
+        
+        
+
+       
+
+       
+        
 
         while (syottotiedosto.hasNextLine()) {
-            stringtaulukko = new StringTaulukko();
-            parseri = new Parseri(stringtaulukko,tulkinnatTaulukkoon);
+            
             String rivi = syottotiedosto.nextLine();
             int rivinPituus = rivi.length();
-
+             
+            kasitteleStringi = new KasitteleStringi(rivi);
+             stringtaulukkotaulukko = new StringTaulukkoTaulukko();
+             
+              StringTaulukko tulkinnat = kasitteleStringi.getTulkinnatTaulukkoon();
+       
+             
             startTimePilkoString = System.nanoTime();
-            stringtaulukko.pilkoStringTaulukkoon(rivi);
+             RegExTulkki.annaEsimerkkisanat(tulkinnat);
+        
             endTimePilkoString = System.nanoTime();
 
             durationPilkoString = endTimePilkoString - startTimePilkoString;
-            tulosTiedosto.println("pilkoStringTaulukkoon " + rivinPituus + " merkillä kesti " + durationPilkoString + " nanosekuntia");
+            tulosTiedosto.println("annaEsimerkkisanat " + rivinPituus + " merkillä kesti " + durationPilkoString + " nanosekuntia");
 
-            startTimeKayLapiTaulukko = System.nanoTime();
-            parseri.kayLapiStringTaulukko();
-            endTimeKayLapiTaulukko = System.nanoTime();
-            
-            System.out.println(startTimeKayLapiTaulukko);
-            System.out.println(endTimePilkoString);
-            durationKayLapiTaulukko = endTimeKayLapiTaulukko - startTimeKayLapiTaulukko;
-            System.out.println(durationKayLapiTaulukko);
-            tulosTiedosto.println("kayLapiStringTaulukko " + rivinPituus + " merkillä kesti " + durationKayLapiTaulukko + " nanosekuntia");
+         
 
         }
         tulosTiedosto.close();

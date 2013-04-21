@@ -1,4 +1,3 @@
-
 package JunitTestit;
 
 /*
@@ -12,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import regextulkki.StringTaulukko;
+import regextulkki.KasitteleStringi;
 
 /**
  *
@@ -403,13 +403,23 @@ public class StringTaulukkoTest {
 
 
     }
-        @Test
+
+    @Test
     public void annaTaulukonArvoKunIndeksiVaarin() {
-       String vastaus1= stringTaulukko.annaTaulukonAlkionArvo(-1);
-       String vastaus2= stringTaulukko.annaTaulukonAlkionArvo(11);
+        String vastaus1 = stringTaulukko.annaTaulukonAlkionArvo(-1);
+        String vastaus2 = stringTaulukko.annaTaulukonAlkionArvo(11);
         assertEquals("false", vastaus1);
         assertEquals("false", vastaus2);
 
+
+    }
+
+
+    @Test
+    public void annaStringikokonaisena() {
+        stringTaulukko.pilkoStringTaulukkoon("Mikko");
+        String vastaus = stringTaulukko.annaStringKokonaisenaTaulukosta();
+        assertEquals("Mikko", vastaus);
 
     }
 
@@ -485,7 +495,4 @@ public class StringTaulukkoTest {
         assertEquals(taulunPituus4, 20);
 
     }
-    
-
-    
 }

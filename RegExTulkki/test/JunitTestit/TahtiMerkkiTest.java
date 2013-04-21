@@ -45,6 +45,15 @@ public class TahtiMerkkiTest {
     @After
     public void tearDown() {
     }
+    
+        @Test
+    public void lisataankoTahti() {
+        KasitteleStringi.setLisataankoTahti(false);
+       
+        assertEquals(false, KasitteleStringi.isLisataankoTahti());
+  
+    }
+        
     @Test
     public void pelkkaTahti() {
         KasitteleStringi.nollaaStaattisetMuuttujat();

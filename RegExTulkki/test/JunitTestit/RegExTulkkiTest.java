@@ -44,9 +44,34 @@ public class RegExTulkkiTest {
     @After
     public void tearDown() {
     }
+    
+    
+               @Test
+    public void seuraavaTasoTest() {
+        int[] testi = new int[2];
+        testi[0]= 2;
+        testi[1]=1;
+       int vastaus = RegExTulkki.mikaOnSeuraavaTaso(testi, 0);
+       
+          assertEquals(vastaus, -1);
+    }
+               
+            @Test
+    public void mainTest() {
+          RegExTulkki.main(new String[] {"arg1", "arg2", "arg3"});
+          
+    }
+    
+        @Test
+    public void kasittetleStringi() {
+            KasitteleStringi kas = new KasitteleStringi("a");
+  StringTaulukko stringtaulukko = kas.getStringTaulukko();
+        assertEquals(stringtaulukko.getAlkioidenLKM(), 1);
+    }
 
     @Test
     public void pelkkaStringi() {
+         RegExTulkki.nollaaStringtaulukkkotaulukko();
         stringtaulukko.pilkoStringTaulukkoon("aaa");
         RegExTulkki.annaEsimerkkisanat(stringtaulukko);
         assertEquals(1, RegExTulkki.getStringtaulukkotaulukko().getAlkioidenLKM());

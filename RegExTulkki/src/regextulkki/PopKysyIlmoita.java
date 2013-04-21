@@ -17,8 +17,7 @@ public class PopKysyIlmoita {
  * @param viesti ilmoitettava viesti
  */
       public static void ilmoita(String viesti) {
-    JOptionPane.showMessageDialog(null,
-        viesti, "", JOptionPane.PLAIN_MESSAGE);
+    JOptionPane.showMessageDialog(null,viesti, "", JOptionPane.PLAIN_MESSAGE);
   }
        /**
  * Metodi kysyy käyttäjältä regexiä

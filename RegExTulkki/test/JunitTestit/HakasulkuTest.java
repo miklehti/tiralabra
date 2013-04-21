@@ -49,6 +49,24 @@ public class HakasulkuTest {
     @After
     public void tearDown() {
     }
+    
+            @Test
+    public void onkojaljella() {
+    boolean onko =  hakasulkuparseri.onkoAlkioitaVielaJaljella();
+        assertEquals(false, onko);
+       StringTaulukko tutkittava = new StringTaulukko();
+       StringTaulukko tulokset = new StringTaulukko();
+       tutkittava.pilkoStringTaulukkoon("^a");
+       HakasulkuParseri hak = new HakasulkuParseri(tutkittava,tulokset);
+            } 
+    
+        @Test
+    public void setHakasulku() {
+        KasitteleStringi.nollaaStaattisetMuuttujat();
+        KasitteleStringi.setLisataankoHakasulkumerkki(false);
+        assertEquals(false, KasitteleStringi.isLisataankoHakasulkumerkki());
+    
+    }
 
     @Test
     public void pelkkaHakasulku() {

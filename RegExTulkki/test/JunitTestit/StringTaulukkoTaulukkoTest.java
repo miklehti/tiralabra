@@ -103,6 +103,23 @@ public class StringTaulukkoTaulukkoTest {
     @After
     public void tearDown() {
     }
+    
+          @Test
+    public void syotteet() {
+         StringTaulukko vastaus =  stringTaulukkoTaulukkoTaulukko.annaTaulukonAlkionArvo(-1);
+         StringTaulukko vastaus2 = stringTaulukkoTaulukkoTaulukko.annaTaulukonAlkionArvo(100);
+           
+        assertEquals(null, vastaus);
+        assertEquals(null, vastaus2);
+    }
+    
+       @Test
+    public void setgetTesti() {
+           stringTaulukkoTaulukkoTaulukko.setTutkittavaIndeksi(1);
+           int indeksi = stringTaulukkoTaulukkoTaulukko.getTutkittavaIndeksi();
+           
+        assertEquals(1, indeksi);
+    }
 
     @Test
     public void konstruktoriLuoTyhjanTaulukon() {

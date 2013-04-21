@@ -64,31 +64,7 @@ public class KasitteleStringi {
         parseri.kayLapiStringTaulukko();
 
     }
-///**
-//     * Metodi purkaa stringin parseria varten osiin. Käyttää pinoa apuna
-//     *
-//     * @param vastaus käsiteltävä stringi.
-//     */
-//    public void annaEsimerkkivastauksia() {
-//        StringTaulukko tutkittavaPalanen = annaTutkittavaPalanen();
-//        for(int i = 0; i<stringTaulukko.getAlkioidenLKM();i++){
-//            if(stringTaulukko.annaTaulukonAlkionArvo(i).equals("(")){
-//                
-//               tutkittavaPalanen = annaTutkittavaPalanen();
-//            }
-//   
-//        }
-//    }
-//    
-//       /**
-//     * Metodi antaa sulkujen välisen palasen 
-//     *
-//     * @param vastaus käsiteltävä stringi.
-//     */
-//    public StringTaulukko annaTutkittavaPalanen(){
-//        StringTaulukko palanen = new StringTaulukko();
-//        return palanen;
-//    }
+
 
 
 

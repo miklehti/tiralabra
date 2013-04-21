@@ -1,4 +1,5 @@
-pilkoStringTaulukkoon 389 merkillä kesti 120115nanosekuntia
-kayLapiStringTaulukko 389 merkillä kesti 781123 nanosekuntia
-pilkoStringTaulukkoon 17 merkillä kesti 4181nanosekuntia
-kayLapiStringTaulukko 17 merkillä kesti 25847 nanosekuntia
+annaEsimerkkisanat 7 merkillä kesti 557240 nanosekuntia
+annaEsimerkkisanat 32 merkillä kesti 34590 nanosekuntia
+annaEsimerkkisanat 38 merkillä kesti 39911 nanosekuntia
+annaEsimerkkisanat 61 merkillä kesti 53976 nanosekuntia
+annaEsimerkkisanat 88 merkillä kesti 97308 nanosekuntia

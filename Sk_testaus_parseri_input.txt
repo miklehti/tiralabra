@@ -1,2 +1,5 @@
-a?aaasdfasdfsa67&/&vdasfgafdsafasfsdfdasfasdfasgfgdfgasdgfafsadfasdfasdfasdfdsafasdfasfafdsadfasf&asdfasdfasdfasfd?adsf+asdgfasdfasfdasdfasdfasdfsadf+asdfasdfasfasdkkk4$maksdjffljasdfjasköfjalkdfjklaösjfkjsafjasldfjaldfjasljfajsdfamfmdfmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-a+adsf\&asddfasdf
+r(p|es)
+reg(ular expressions?|ex(p|es)?)
+reg(ular expressions?|ex(p|e(a|ff)s)?)
+reg(ular expressions?|ex(p|e(a|f(aaaaa|ff(ssss|dddd)ff)f)s)?)
+reg(ular expressions?|ex(p|e(a|f(aaaaa|ff(sss(sss|fsdfasadfasdfsafdsafd)s|dddd)ff)f)s)?)

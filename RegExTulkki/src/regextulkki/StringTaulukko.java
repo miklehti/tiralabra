@@ -92,6 +92,19 @@ public class StringTaulukko {
         taulukko[alkioidenLKM] = lisattava;
         alkioidenLKM = alkioidenLKM + 1;
     }
+    
+           /**
+     * Metodi palauttaa Stringtaulukon arvot yhtenä könttänä
+     * @return palautettava String jossa kaikki yhdistettynä
+     */
+
+    public String annaStringKokonaisenaTaulukosta() {
+        String palautettava = "";
+       for(int i = 0; i<alkioidenLKM;i++){
+           palautettava = palautettava + taulukko[i];
+       }
+       return palautettava;
+    }
 
     /**
      * Metodi poistaa merkkejä taulukosta siirtämällä loppuja merkkejä alkuun

@@ -131,6 +131,8 @@ public class StringTaulukkoTaulukko {
         }
     }
     
+
+    
            /**
      * toStringTulostukseen
 
@@ -139,14 +141,53 @@ public class StringTaulukkoTaulukko {
 
     @Override
     public String toString() {
+        
+         String[] tulokset = new String[alkioidenLKM];
          String tulos = "";
         for(int i = 0; i <alkioidenLKM;i++){
             StringTaulukko tulostettava = annaTaulukonAlkionArvo(i);
-            System.out.println(tulostettava.toString());
-            
+            String tutkittava = tulostettava.toString();
+            if(loytyykoTulosjo(tutkittava, tulokset)==false){
+            tulos = tulostettava.toString();
+            tulokset[i]=tulos;
+            }
         }
-         return "ok";
+        String lopputulos = tulostaArray(tulokset);
+        
+         return lopputulos;
     }
     
+              /**
+     * toStringTulostukseen
+
+     *
+     */
+    public boolean loytyykoTulosjo(String tulos, String[] tulokset){
+        for(int i = 0; i <tulokset.length;i++){        
+            if(tulokset[i]==null){
+                continue;
+            }
+            if(tulokset[i].equals(tulos)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+                /**
+     * toStringTulostukseen
+
+     *
+     */
+    public String tulostaArray(String[] array){
+        String tulos = "";
+        for(int i = 0; i<array.length;i++){
+            if(array[i]==null){
+                continue;
+            }
+            tulos = tulos + array[i] + "\n";
+        }
+        return tulos;
+    }
     
 }
